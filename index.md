@@ -3,6 +3,6 @@ layout: home
 title: "Home"
 ---
 
-This theme allows an academic person to showcase their research interests, publications, research group, curriculum vitae, any courses that they may be teaching, or anything else they may want to put out into the world.
+Hello!
 
-Academics can use this home page to describe their research interests, display their latest publications, or provide an introduction to their research group.
+My name is Gabriel Lipkowitz. I am currently a PhD student at Stanford University advised by Joseph DeSimone. This website is currently under construction. I invite you to visit again later.
