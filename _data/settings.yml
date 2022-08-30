@@ -5,8 +5,8 @@ menu:
 - {name: 'contact', url: '/contact'}
 
 courses:
-- {name: 'Building Modeling for Design and Construction, CEE220A (Stanford University, Summer 2022)'}
-- {name: 'Parametric Design and Optimization, CEE 220C (Stanford University, Spring 2022)'}
+- {name: 'Building Modeling for Design and Construction, CEE220A (Stanford University, Summer 2022)', url:'/'}
+- {name: 'Parametric Design and Optimization, CEE 220C (Stanford University, Spring 2022)', url:'/'}
 
 social:
 - {icon: 'github', link: 'https://github.com/gabriel-lipkowitz'}
