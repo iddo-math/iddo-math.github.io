@@ -5,7 +5,8 @@ menu:
 - {name: 'contact', url: '/contact'}
 
 courses:
-- {name: 'Vector Calculus', url: 'vector-calculus'}
+- {name: 'Building Modeling for Design and Construction, CEE220A (Stanford University, Summer 2022)'}
+- {name: 'Parametric Design and Optimization, CEE 220C (Stanford University, Spring 2022)'}
 
 social:
 - {icon: 'github', link: 'https://github.com/gabriel-lipkowitz'}
