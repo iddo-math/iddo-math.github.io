@@ -12,3 +12,23 @@ body {
 body a {
   color: $linkColor
 }
+
+
+.word-wrap{word-wrap: break-word;}
+
+img {
+  width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  .history {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 1em;
+    grid-row-gap: 100px;
+  }
+
+  .img {
+    width: 80%;
+  }
+}

@@ -2,12 +2,32 @@
 layout: default
 ---
 
-<div class="row g-5 mb-5">
-  <div class="col-md-6">
+<div class="row justify-content-between">
+  <div class="col-sm-6 mb-2">
     {{ content }}
   </div>
-  <div class="col-md-6">
-    <img src="{{ site.github.url }}/assets/img/profile.jpeg" alt="Home" width="100%">
+  <div class="col-sm-3">
+    <img src="{{ site.github.url }}/assets/img/profile.jpeg" alt="Home">
+  </div>
+</div>
+
+<h3 class="fw-bold border-bottom pb-3 mb-5">Highlighted Research</h3>
+
+<div class="row g-5 mb-5 justify-content-md-left align-self-center">
+  <!-- <div class="col-md-auto">
+    <img src="{{ site.github.url }}/assets/img/cover.jpg" width="30%">
+  </div>
+  <div class="col-md-auto"><h4>Injection continuous liquid interface production of 3D objects</h4></div> -->
+  <div class="col col-sm-3 my-auto">
+    <div class="text-center">
+      <img src="{{ site.github.url }}/assets/img/cover.jpg">
+    </div>
+  </div>
+  <div class="col-sm">
+    <a href="https://www.science.org/doi/10.1126/sciadv.abq3917"><h4>Injection continuous liquid interface production of 3D objects</h4></a>
+    <p class="word-wrap mb-2"><b>Gabriel Lipkowitz</b>, Tim Samuelsen, Kaiwen Hsiao, Brian Lee, Maria T. Dulay, Ian Coates, Harrison Lin, William Pan, Geoffrey Toth, Lee Tate, Eric S. G. Shaqfeh, Joseph M. DeSimone</p>
+    <p class="word-wrap small">In additive manufacturing, it is imperative to increase print speeds, use higher-viscosity resins, and print with multiple different resins simultaneously. To this end, we introduce a previously unexplored ultraviolet-based photopolymerization three-dimensional printing process. The method exploits a continuous liquid interface—the dead zone—mechanically fed with resin at elevated pressures through microfluidic channels dynamically created and integral to the growing part. Through this mass transport control, injection continuous liquid interface production, or iCLIP, can accelerate printing speeds to 5- to 10-fold over current methods such as CLIP, can use resins an order of magnitude more viscous than CLIP, and can readily pattern a single heterogeneous object with different resins in all Cartesian coordinates. We characterize the process parameters governing iCLIP and demonstrate use cases for rapidly printing carbon nanotube–filled composites, multimaterial features with length scales spanning several orders of magnitude, and lattices with tunable moduli and energy absorption. iCLIP enables rapid creation of 3D complex objects with high-viscosity composite resins and multiple materials simultaneously.</p>
+    <b><p class="mt-2"><a href="https://youtu.be/YvjLw0mbgIs">[📹 Video]</a></p></b>
   </div>
 </div>
 
