@@ -1,0 +1,20 @@
+---
+layout: default
+---
+
+{{ content }}
+
+<h3 class="fw-bold border-bottom pb-3 mb-5">Hobbies</h3>
+{% for hobby in site.data.settings.hobbies %}
+<div class="row g-5 mb-5">
+  <div class="col-md-6">
+    <b>{{ hobby.name }}</b>
+    <!-- <p>{{ hobby.description }}</p> -->
+    <p><a href={{hobby.link}}> {{hobby.description}}</a></p>
+  </div>
+  <div class="col-md-6">
+    <img src="{{ site.github.url }}/{{ hobby.image }}" alt={{hobby.name}} width="100%">
+  </div>
+</div>
+<hr />
+{% endfor %}
