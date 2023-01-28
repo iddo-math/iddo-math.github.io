@@ -14,7 +14,7 @@ people:
 
 hobbies:
 - {name: '🐲 Board Games and D&D TRPG',  url: 'hobbies', description: 'DND-Wizards', link: 'https://dnd.wizards.com/', image: 'assets/img/h1_BaldursGate.jpg'}
-- {name: '🎥 UAV Photography and Film Editing',  url: 'hobbies', description: 'Winter Days', link: 'https://www.bilibili.com/video/BV1nW4y1M7un/?share_source=copy_web&vd_source=6db384fae8a3447f8093591b1e124c05', image: 'assets/img/h2_Harvest.jpg'}
+- {name: '🎥 UAV Photography and Film Editing',  url: 'hobbies', description: 'Aerial Videos', link: 'https://www.bilibili.com/video/BV1nW4y1M7un/?share_source=copy_web&vd_source=6db384fae8a3447f8093591b1e124c05', image: 'assets/img/h2_Harvest.jpg'}
 - {name: '⛰️ Hiking, Cycling and Touring',  url: 'hobbies', description: 'Bicycle Touring', link: 'https://www.crazyguyonabike.com/', image: 'assets/img/h3_Touring.jpg'}
 - {name: '🕹️ LOL Game',  url: 'hobbies', description: 'League of Legends', link: 'https://www.leagueoflegends.com/', image: 'assets/img/h4_Urgot.jpg'}
 
