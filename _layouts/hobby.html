@@ -17,12 +17,12 @@ layout: default
     <embed height="100" width="240"  src="assets/Pink Floyd-Money (2011 Remaster).mp3" autostart=true starttime="00:35" loop="true" >
   </div>
   <div class="col-md-6">
-    <img src="assets/img/Cover.jpg" alt="Pink Floyd - The Dark Side Of The Moon (1973)" width="100%" >
+    <img src="assets/img/Cover.jpg" alt="Pink Floyd - The Dark Side Of The Moon (1973)" width="80%" >
   </div>
 </div>
-<hr />
 
 {% for hobby in site.data.settings.hobbies %}
+<hr />
 <div class="row g-5 mb-5">
   <div class="col-md-6">
     <b>{{ hobby.name }}</b>
@@ -33,5 +33,4 @@ layout: default
     <img src="{{ site.github.url }}/{{ hobby.image }}" alt={{hobby.name}} width="100%">
   </div>
 </div>
-<hr />
 {% endfor %}
