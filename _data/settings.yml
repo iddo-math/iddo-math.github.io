@@ -1,16 +1,16 @@
 menu:
-- {name: 'research', url: '/research'}
-- {name: 'teaching', url: '/teaching'}
-- {name: 'cv', url: '/cv'}
-- {name: 'contact', url: '/contact'}
+- {name: "research", url: "/research"}
+- {name: "teaching", url: "/teaching"}
+- {name: "cv", url: "/cv"}
+- {name: "contact", url: "/contact"}
 
 courses:
-- {name: 'Building Modeling for Design and Construction, CEE220A (Stanford University, Summer 2022)', url:'/'}
-- {name: 'Parametric Design and Optimization, CEE 220C (Stanford University, Spring 2022)', url:'/'}
+- {name: "Building Modeling for Design and Construction - CEE220A (Stanford University, Summer 2022)" ,  url:"/"}
+- {name: "Parametric Design and Optimization, CEE 220C (Stanford University, Spring 2022)", url:"/"}
 
 social:
-- {icon: 'github', link: 'https://github.com/gabriel-lipkowitz'}
-- {icon: 'twitter', link: 'https://twitter.com/gabriellipkowi2'}
+- {icon: "github", link: "https://github.com/gabriel-lipkowitz"}
+- {icon: "twitter", link: "https://twitter.com/gabriellipkowi2"}
 
 contacts:
-- {name: 'Gabriel Lipkowitz', title: 'PhD Student', department: 'Mechanical Engineering', institution: 'Stanford University', institution_address: '318 Campus Drive, Stanford, CA', email: 'gel19@stanford.edu', office: 'James H. Clark Center', image: 'assets/img/profile.jpeg'}
+- {name: "Gabriel Lipkowitz", title: "PhD Student", department: "Mechanical Engineering", institution: "Stanford University", institution_address: "318 Campus Drive, Stanford, CA", email: "gel19@stanford.edu", office: "James H. Clark Center", image: "assets/img/profile.jpeg"}
