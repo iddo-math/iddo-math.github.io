@@ -13,4 +13,4 @@ social:
 - {icon: "twitter", link: "https://twitter.com/gabriellipkowi2"}
 
 contacts:
-- {name: "Gabriel Lipkowitz", title: "PhD Student", department: "Mechanical Engineering", institution: "Stanford University", institution_address: "318 Campus Drive, Stanford, CA", email: "gel19@stanford.edu", office: "James H. Clark Center", image: "assets/img/profile.jpeg"}
+- {name: "Gabriel Lipkowitz", title: "PhD Candidate", department: "Mechanical Engineering", institution: "Stanford University", institution_address: "318 Campus Drive, Stanford, CA", email: "gel19@stanford.edu", office: "James H. Clark Center", image: "assets/img/profile.jpeg"}
