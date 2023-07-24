@@ -9,6 +9,15 @@ body {
   font-family: $bodyFont;
 }
 
+.border-bottom {
+  border-bottom-color: rgb(57, 57, 57) !important;
+}
+
+
+.border-top {
+  border-top-color: rgb(57, 57, 57) !important;
+}
+
 body a {
   color: $linkColor
 }
@@ -23,4 +32,5 @@ body a {
 
 .img-profile {
   width: 80%;
+  align-content: center;
 }
