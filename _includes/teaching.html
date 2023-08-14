@@ -1,6 +1,41 @@
+<script>
+
+       $(document).ready(function () {
+      var videoPath;
+       $(".video-play-btn").click(function () {
+        videoPath = $(this).data("src");
+       });
+       $("#myModal").on("shown.bs.modal", function (e) {
+        $("#video").attr("src", videoPath);
+       });
+       $("#myModal").on("hide.bs.modal", function (e) {
+        $("#video").attr("src", "");
+       });
+       });
+      
+</script>
+
 <div class="row g-5 mb-5">
     <div>
-        <h3 class="fw-bold border-bottom pb-3 mb-5">Teaching</h3>
+        <h3 class="fw-bold border-bottom pb-1 mb-3">Teaching</h3>
+        <h5 class="pb-3">Highlighted Lecture</h5>
+        <div class="row g-5 mb-5 justify-content-md-left align-self-center">
+              <!-- <div class="col-md-auto">
+                <img src="{{ site.github.url }}/assets/img/cover.jpg" width="30%">
+              </div>mt-3
+              <div class="col-md-auto"><h4>Injection continuous liquid interface production of 3D objects</h4></div> -->
+              <div class="col-sm-3">
+                     <div class="container">
+                            <div class="hover_img">
+                            <img src="assets/img/thumb.jpeg" style='width:200%' class="video-play-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/4OYhYDziklg?autoplay=1" data-target="#myModal">
+                     </div>
+                     </div>
+              </div>
+              <div class="col-sm px-5">
+                     <a  class="video-play-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/4OYhYDziklg?autoplay=1" data-target="#myModal"><h4>Designing Data: Methods for 3D synthetic data generation for computer vision machine learning</h4></a>
+                     <p class="word-wrap mb-2">UC Berkeley, Data 8</p>
+                   </div>
+              </div>
         <h5>Courses</h5>
        <p><a href="https://online.stanford.edu/courses/cee220a-building-modeling-design-construction">Building Modeling for Design and Construction - CEE220A (Stanford University, Summer 2022)</a> </p>
        <p>The foundational Building Information Modeling course introduces techniques for creating, managing, and applying of building information models in the building design and construction process. The course covers processes and tools for creating, organizing, and working with 2D and 3D computer representations of building components and geometries to produce models used in architectural design, construction planning and documentation, rendering and visualization, simulation, and analysis.
@@ -17,3 +52,17 @@
         <p> Nolan Tok (HS student)</p>
 </div>
 </div>
+
+<div class="modal fade" id="myModal">
+       <div class="modal-dialog">
+       <div class="modal-content">
+       <div class="modal-body">
+       <button type="button" class="close" data-dismiss="modal">
+       <span aria-hidden="true">&times;</span></button>
+       <div class="embed-responsive embed-responsive-16by9">
+       <iframe id="video" width="640" height="360" src="" title="Futuristic HUD" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+       </div>
+       </div>
+     </div>
+     </div>
+     </div></div></div>
