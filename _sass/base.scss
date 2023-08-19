@@ -61,7 +61,7 @@ body a {
 
 .modal-body {
   color: #000000;
-  background: $backgroundColor;
+  background: #000000;
   width: fit-content;
   max-width: none;  
 }
@@ -78,3 +78,26 @@ body a {
 .hover_img:hover {
   cursor: pointer !important;
 }
+
+.close {
+  transition: transform .7s ease-in-out;
+}
+
+.close:hover{
+  opacity:0.5;
+  transition: transform .7s ease-in-out;
+  transform: rotate(45deg);
+}
+
+#closing {
+  padding-top:0px !important;
+  padding-bottom:0px !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+// .close{
+//   // margin-left: auto !important;
+//   margin-right: 0  !important;
+//   height: 100%;
+// }
