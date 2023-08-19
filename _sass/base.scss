@@ -29,31 +29,50 @@ body a {
   max-width: 80%;
 }
 
+.modal-content{
+  width: unset;
+}
 
 .img-profile {
   width: 80%;
   align-content: center;
+  
 }
 
-// .modal {
-//   width: 80%;
-//   align-content: center;
-// }
-
 .modal {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.modal::before {
+  content: "";      
+  display: inline-block;
+  height: 100%;    
+  margin-right: -4px;
+  vertical-align: middle;
+}
+
+.modal-dialog { 
+  display: inline-block;  
+  text-align: left;   
+  vertical-align: middle;
+  margin-top: 10%;
+  max-width: none;
 }
 
 .modal-body {
   color: #000000;
   background: $backgroundColor;
+  width: fit-content;
+  max-width: none;  
+}
+
+.iframe{
+  z-index: 9999;
 }
 
 .modal-content {
   background: $backgroundColor;
+  width: fit-content;
 }
 
 .hover_img:hover {
