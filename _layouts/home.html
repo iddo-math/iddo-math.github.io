@@ -8,7 +8,13 @@ layout: default
     {{ content }}
   </div>
   <div class="col-md-5 text-center" style="float:none;margin:auto;">
-    <img class="img-profile mt-3" src="{{ site.github.url }}/assets/img/columnsbw.JPG" alt="Home">
+    <div class="img-container">
+      <img class="img-profile mt-3" src="{{ site.github.url }}/assets/img/columnsbw.JPG" alt="Home" style="width: 360px">
+      <div class="overlay">
+        <span><img class="img-profile mt-3" src="{{ site.github.url }}/assets/img/columns.JPG" alt="Home" style="width: 360px"></span>
+      </div>
+    </div>
+    <!-- <img class="img-profile mt-3" src="{{ site.github.url }}/assets/img/columnsbw.JPG" alt="Home"> -->
   </div>
 </div>
 
@@ -16,7 +22,15 @@ layout: default
 
 <div class="row g-5 mb-5 justify-content-md-left align-self-center">
   <div class="col-sm-3 my-auto py-4 text-center">
-      <img class="img-post" src="{{ site.github.url }}/assets/img/cover.jpg">
+    <!-- <img class="img-post" style="width:195px" src="{{ site.github.url }}/assets/img/cover.jpg"> -->
+
+    <div class="img-container">
+    <img class="img-post" style="width:195px" src="{{ site.github.url }}/assets/img/coverBW.jpg">
+      <div class="overlay">
+        <span><img class="img-post" style="width:195px !important" src="{{ site.github.url }}/assets/img/cover.jpg">
+        </span>
+      </div>
+  </div>
   </div>
   <div class="col-sm">
     <a href="https://www.science.org/doi/10.1126/sciadv.abq3917"><h4>Injection continuous liquid interface production of 3D objects</h4></a>
@@ -24,6 +38,6 @@ layout: default
     <p class="word-wrap small">In additive manufacturing, it is imperative to increase print speeds, use higher-viscosity resins, and print with multiple different resins simultaneously. To this end, we introduce a previously unexplored ultraviolet-based photopolymerization three-dimensional printing process. The method exploits a continuous liquid interface—the dead zone—mechanically fed with resin at elevated pressures through microfluidic channels dynamically created and integral to the growing part. Through this mass transport control, injection continuous liquid interface production, or iCLIP, can accelerate printing speeds to 5- to 10-fold over current methods such as CLIP, can use resins an order of magnitude more viscous than CLIP, and can readily pattern a single heterogeneous object with different resins in all Cartesian coordinates. We characterize the process parameters governing iCLIP and demonstrate use cases for rapidly printing carbon nanotube–filled composites, multimaterial features with length scales spanning several orders of magnitude, and lattices with tunable moduli and energy absorption. iCLIP enables rapid creation of 3D complex objects with high-viscosity composite resins and multiple materials simultaneously.</p>
     <b><p class="mt-2"><a href="https://youtu.be/YvjLw0mbgIs">[📹 Video]</a></p></b>
   </div>
-</div>
+  </div>
 
 {% include publications.html %}

@@ -11,9 +11,12 @@
         <p>Email: <a href="mailto:{{contact.email}}" >{{ contact.email }}</a></p>
         <p>Office: {{ contact.office }}</p>
       </div>
-      <div class="col-md-6">
-        <img src="{{ site.github.url }}/assets/img/columns.JPG" alt="Contact" width="100%">
-      </div>
+      <div class="col-md-4">
+        <div class="img-container">
+          <img class="img-profile mt-3" src="{{ site.github.url }}/assets/img/neonBW.JPG" alt="Home" style="width: 30vw">
+          <div class="overlay">
+            <span><img class="img-profile mt-3" src="{{ site.github.url }}/assets/img/neongabe.JPG" alt="Home" style="width: 30vw"></span>
+          </div>      </div>
     </div>
     {% endfor %}
   </div>
