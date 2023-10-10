@@ -1,5 +1,6 @@
 menu:
 - {name: "research", url: "/research"}
+- {name: "design", url: "/design"}
 - {name: "teaching", url: "/teaching"}
 - {name: "cv", url: "/cv"}
 - {name: "contact", url: "/contact"}
