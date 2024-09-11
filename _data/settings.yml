@@ -7,9 +7,31 @@ menu:
 - {name: 'CV', url: '/cv'}
 - {name: 'Contact', url: '/contact'}
 
+people:
+- {name: 'Primary Investigator', title: 'Researcher', department: 'Physics & Astronomy', institution: 'Some University', institution_address: '1 Main Street, Canada', phone: '(000) 000-0000', email: 'hello@university.edu', office: 'Science Building 505', image: 'assets/img/primary-investigator.jpg', url: 'primary-investigator'}
+- {name: 'Lab Technician', title: 'Researcher', department: 'Physics & Astronomy', institution: 'Some University', institution_address: '1 Main Street, Canada', phone: '(000) 000-0000', email: 'hello@university.edu', office: 'Science Building 505', image: 'assets/img/lab-technician.jpg', url: 'lab-technician'}
+- {name: 'Graduate Student', title: 'Researcher', department: 'Physics & Astronomy', institution: 'Some University', institution_address: '1 Main Street, Canada', phone: '(000) 000-0000', email: 'hello@university.edu', office: 'Science Building 505', image: 'assets/img/graduate-student.jpg', url: 'graduate-student'}
+
+hobbies:
+- {name: '🐲 Board Games and D&D TRPG',  url: 'hobbies', description: 'DND-Wizards', link: 'https://dnd.wizards.com/', image: 'assets/img/h1_BaldursGate.jpg'}
+- {name: '🎥 UAV Photography and Film Editing',  url: 'hobbies', description: 'Aerial Videos', link: 'https://www.bilibili.com/video/BV1nW4y1M7un/?share_source=copy_web&vd_source=6db384fae8a3447f8093591b1e124c05', image: 'assets/img/h2_Harvest.jpg'}
+- {name: '⛰️ Hiking, Cycling and Touring',  url: 'hobbies', description: 'Bicycle Touring', link: 'https://www.crazyguyonabike.com/', image: 'assets/img/h3_Touring.jpg'}
+- {name: '🕹️ LOL Game',  url: 'hobbies', description: 'League of Legends', link: 'https://www.leagueoflegends.com/', image: 'assets/img/h4_Urgot.jpg'}
+
+courses:  
+- {name: 'Vector Calculus', url: 'vector-calculus'}
+- {name: 'Quantum Mechanics', url: 'quantum-mechanics'}
+- {name: 'Stellar Structures', url: 'stellar-structures'}
+
+social:
+- {icon: 'github', link: 'https://github.com/HobbitArmy'}
+- {icon: 'researchgate', link: 'https://www.researchgate.net/profile/Xiangyu_Lu6'}
+- {icon: 'google', link: 'https://scholar.google.com/citations?user=u2q9sI8AAAAJ&hl=en'}
+- {icon: 'twitter', link: 'https://twitter.com/luxiangyugo'}
+
 contacts:
 - {name: 'Xiangyu', title: 'Doctoral student', department: 'Biosystems Engineering', 
 institution: 'Zhejiang University', 
 institution_address: '866 Yuhangtang Road, Hangzhou, Zhejiang Province, China',
  phone: '+86 152 0642 4953', email: 'luxyzju@zju.edu.cn',  
- image: 'assets/img/IMG_0602.jpg'}
+ image: 'assets/img/me3.jpg'}
