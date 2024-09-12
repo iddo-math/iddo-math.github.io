@@ -30,8 +30,6 @@ social:
 - {icon: 'twitter', link: 'https://twitter.com/luxiangyugo'}
 
 contacts:
-- {name: 'Xiangyu', title: 'Ph.D. student', major: 'Agricultural Engineering', 
-institution: 'Zhejiang University', 
-institution_address: '866 Yuhangtang Road, Hangzhou, Zhejiang Province, China',
+- {name: 'Xiangyu', title: 'Ph.D. student', major: 'Agricultural Engineering', institution: 'Zhejiang University', institution_address: '866 Yuhangtang Road, Hangzhou, Zhejiang Province, China',
  phone: '+86 152 0642 4953', email: 'luxyzju@zju.edu.cn',  
  image: 'assets/img/IMG_0602.jpg'}
