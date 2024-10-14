@@ -2,4 +2,3 @@ url: "tasnia-hussain.github.io" # the base hostname & protocol for your site, e.
 baseurl:
 title: "Tasnia Hussain" # the name of your site, e.g. ACME Corp.
 description: "Academic Resume"
-theme: academic-jekyll-theme
