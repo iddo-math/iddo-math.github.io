@@ -1,0 +1,36 @@
+---
+layout: default
+---
+
+{{ content }}
+
+<!-- <object height="200" width="50" data="assets/Pink Floyd-If.mp3"></object> -->
+
+<h4 class="fw-bold border-bottom pb-3 mb-5">Hobbies</h4>
+
+<div class="row g-5 mb-5">
+  <div class="col-md-6">
+    <b> 🎧 Listen to PinkFloyd </b>
+    <!-- <p>{{ hobby.description }}</p> -->
+    <p><a href="https://www.youtube.com/watch?v=ylSpBJAMj7c" 
+      target = "_blank"> <i>"Pink Floyd - Wot's...Uh the Deal"</i> </a></p>
+    <embed height="100" width="240"  src="assets/Pink Floyd - Wot's...Uh the Deal.mp3" autostart=true starttime="00:35" loop="true" >
+  </div>
+  <div class="col-md-6">
+    <img src="assets/img/PinkFloydObscured.jpg" alt="Pink Floyd - Obscured by Clouds" width="80%" >
+  </div>
+</div>
+
+{% for hobby in site.data.settings.hobbies %}
+<hr />
+<div class="row g-5 mb-5">
+  <div class="col-md-6">
+    <b>{{ hobby.name }}</b>
+    <!-- <p>{{ hobby.description }}</p> -->
+    <p><a href={{hobby.link}} target = "_blank"> {{hobby.description}}</a></p>
+  </div>
+  <div class="col-md-6">
+    <img src="{{ site.github.url }}/{{ hobby.image }}" alt={{hobby.name}} width="100%">
+  </div>
+</div>
+{% endfor %}

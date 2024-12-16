@@ -6,10 +6,10 @@ layout: default
 
 <div class="row g-5 mb-5">
   <div>
-    <h3 class="fw-bold border-bottom pb-3 mb-5">CV</h3>
+    <h4 class="fw-bold border-bottom pb-3 mb-5">CV</h4>
     <div class="row g-5 mb-5">
       <div class="col-md-2">
-        <h4>Education</h4>
+        <h5>Education</h5>
       </div>
       <div class="col-md-10">
         {% for section in site.data.cv.education %}
@@ -20,7 +20,7 @@ layout: default
     </div>
     <div class="row g-5 mb-5">
       <div class="col-md-2">
-        <h4>Academic Experience</h4>
+        <h5>Study Experience</h5>
       </div>
       <div class="col-md-10">
         {% for section in site.data.cv.academic-experience %}
@@ -29,5 +29,15 @@ layout: default
         {% endfor %}
       </div>
     </div>
+    
+    <div class="row g-5 mb-5">
+      <div class="col-md-2">
+        <h5>CV pdf</h5>
+      </div>
+      <div class="col-md-10">        
+        <p><a href="{{ site.baseurl }}/assets\Xiangyu_CV_20240911_En.pdf"> <b>Xiangyu_CV_20240911_En.pdf</b></a></p>
+      </div>
+    </div>
+
   </div>
 </div>
