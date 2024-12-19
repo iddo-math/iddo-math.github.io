@@ -256,6 +256,7 @@ DEPENDENCIES
   css_parser
   feedjira
   httparty
+  wdm
   jekyll
   jekyll-archives
   jekyll-email-protect
