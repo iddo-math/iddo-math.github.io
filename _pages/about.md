@@ -25,7 +25,7 @@ social: false # includes social icons at the bottom of the page
 - I'm usually looking for PhD students and for undergrads interested in research work.
 - Here for advising? Email me.
 
-$$ \int_0^\infty e^{-t} dt =1.$$ 
+$ \int_0^\infty e^{-t} dt =1$ for inline math.
 \begin{equation}
 \frac{1}{2}
 \end{equation}
