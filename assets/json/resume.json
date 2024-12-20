@@ -1,18 +1,18 @@
 {
   "basics": {
-    "name": "Albert Einstein",
-    "label": "Scientist",
+    "name": "Iddo Ben-Ari",
+    "label": "",
     "image": "",
-    "email": "albert@einstein.de",
-    "phone": "(912) 123-4567",
-    "url": "https://alshedivat.github.io/al-folio/",
-    "summary": "A German-born theoretical physicist, widely ranked among the greatest and most influential scientists of all time",
+    "email": "iddo.ben-ari@uconn.edu",
+    "phone": "(860)486-3833",
+    "url": "https://github.com/iddo-math/",
+    "summary": "",
     "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
-      "city": "San Francisco",
+      "address": "Department of Mathematics<br>341 Mansfield Road, U-1009",
+      "postalCode": "CT 06269-1009",
+      "city": "Storrs",
       "countryCode": "US",
-      "region": "California"
+      "region": "Connecticut"
     },
     "profiles": [
       {
