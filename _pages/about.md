@@ -20,12 +20,14 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false # includes social icons at the bottom of the page
 ---
 
-I work in probability theory, and within this area mostly on Markov Processes. I got my PhD in 2005 in the Technion under [Ross Pinsky](https://pinsky.net.technion.ac.il/). I joined UConn in 2008. 
+- I work in probability theory, and within this area mostly on Markov Processes. 
+- I got my PhD in 2005 in the Technion under [Ross Pinsky](https://pinsky.net.technion.ac.il/) and joined UConn in 2008. 
+- I'm usually looking for PhD students and for undergrads interested in research work.
+- Here for advising? Email me.
 
-I am always looking for students, both undergraduate and graduate students for research work. 
 
-$$\int_0^10 \frac{\sin x}{x}dx = \frac{\pi}{2}$$
+I am usually looking for students, both undergraduate and graduate students for research work. See my [research](/iddo-math/research) and [students](iddo-math/students) pages for some more information on work I did with students. 
 
- You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+[//]: # You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+[//]: # Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
