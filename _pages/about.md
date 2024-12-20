@@ -25,6 +25,11 @@ social: false # includes social icons at the bottom of the page
 - I'm usually looking for PhD students and for undergrads interested in research work.
 - Here for advising? Email me.
 
+$$ \int_0^\infty e^{-t} dt =1.$$ 
+\begin{equation}
+\frac{1}{2}
+\end{equation}
+
 
 I am usually looking for students, both undergraduate and graduate students for research work. See my [research](/iddo-math/research) and [students](iddo-math/students) pages for some more information on work I did with students. 
 
