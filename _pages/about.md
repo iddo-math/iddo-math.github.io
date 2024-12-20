@@ -9,6 +9,7 @@ profile:
   image: iddo_portrait.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
+    <p>iddo.ben-ari@uconn.edu</p>
     <p>Office: 431 Monteith</p>
     <p>Department of Mathematics</p>
     <p>University of Connecticut</p>
@@ -25,10 +26,6 @@ social: false # includes social icons at the bottom of the page
 - I'm usually looking for PhD students and for undergrads interested in research work.
 - Here for advising? Email me.
 
-Inline? $$ \int_0^\infty e^{-t} dt =1$$. Yes.  for inline math.
-\begin{equation}
-\frac{1}{2}
-\end{equation}
 
 
 I am usually looking for students, both undergraduate and graduate students for research work. See my [research](/iddo-math/research) and [students](iddo-math/students) pages for some more information on work I did with students. 
