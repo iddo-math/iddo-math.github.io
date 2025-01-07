@@ -1,4 +1,5 @@
 menu:
+- {name: 'home', url: '/index'}
 - {name: 'research', url: '/research'}
 - {name: 'courses', url: '/courses'}
 - {name: 'cv', url: '/cv'}
@@ -22,3 +23,8 @@ social:
 
 contacts:
 - {name: 'Iddo Ben-Ari', title: 'Professor', department: 'Department of Mathematics', institution: 'University of Connecticut', institution_address: '341 Mansfield Rd, Storrs, CT 06269-1009', phone: '', email: 'iddo.ben-ari@uconn.edu', office: 'Monteith 431', image: 'assets/img/contact.jpg'}
+
+links:
+- {title: "UConn Mathematics", url: "https://math.uconn.edu/"}
+- {title: "UConn CLAS", url: "https://clas.uconn.edu/"}
+- {title: "UConn", url: "https://uconn.edu/"}

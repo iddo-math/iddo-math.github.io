@@ -1,10 +1,34 @@
-featured:
-- {name: 'Testing General Relativity with Present and Future Astrophysical Observations. Emanuele Berti (Mississippi U. and Lisbon, CENTRA), Enrico Barausse (Paris, Inst. Astrophys. and Paris U., VI-VII), Vitor Cardoso (Lisbon, IST and Perimeter Inst. Theor. Phys. and Lisbon, CENTRA), Leonardo Gualtieri (Rome U. and INFN, Rome), Paolo Pani (Rome U. and INFN, Rome and Lisbon, IST and Lisbon, CENTRA) et al.', url: '/publications/1501.07274.pdf'}
-- {name: 'Shock interactions, turbulence and the origin of the stellar mass spectrum. Ralph E. Pudritz and N. K.-R. Kevlahan', url: 'http://ms.mcmaster.ca/kevla/pdf/articles/PhilTransRSoc_2013.pdf'}
-- {name: 'Low shear diffusion central schemes for particle methods. Jonathan Panuelos, James Wadsley, Nicholas Kevlahan', url: 'http://ms.mcmaster.ca/kevla/pdf/articles/jcp_v414.pdf'}
+index: 
 
-index:
-- {name: 'Testing General Relativity with Present and Future Astrophysical Observations. Emanuele Berti (Mississippi U. and Lisbon, CENTRA), Enrico Barausse (Paris, Inst. Astrophys. and Paris U., VI-VII), Vitor Cardoso (Lisbon, IST and Perimeter Inst. Theor. Phys. and Lisbon, CENTRA), Leonardo Gualtieri (Rome U. and INFN, Rome), Paolo Pani (Rome U. and INFN, Rome and Lisbon, IST and Lisbon, CENTRA) et al.', url: '/publications/1501.07274.pdf'}
-- {name: 'Shock interactions, turbulence and the origin of the stellar mass spectrum. Ralph E. Pudritz and N. K.-R. Kevlahan', url: 'http://ms.mcmaster.ca/kevla/pdf/articles/PhilTransRSoc_2013.pdf'}
-- {name: 'Low shear diffusion central schemes for particle methods. Jonathan Panuelos, James Wadsley, Nicholas Kevlahan', url: 'http://ms.mcmaster.ca/kevla/pdf/articles/jcp_v414.pdf'}
-- {name: 'Numerical solutions of thin film equations for polymer flows. Thomas. Salez, Joshua D. McGraw, Sara Cormier, Oliver Bäumchen, Kari Dalnoki-Veress, and Elie Raphaël', url: 'https://static1.squarespace.com/static/5684891d7086d74497aeb71f/t/56ec510d2fe1319543ab6d6f/1458327821946/10.1140-epje-i2012-12114-x.pdf'}
+- {title: "Spectral analysis of a family of  second-order elliptic operators with nonlocal boundary condition indexed by a probability measure",
+    authors: "I.B. and Ross Pinsky", 
+    journal: "Journal of Functional Analysis", 
+    volume: "251", 
+    number: "1", 
+    pages: "122--140", 
+    year: "2007", url: "" }
+
+  - { title: "The Asymptotic Shift for the Principal Eigenvalue for a Class of Second-Order Elliptic Operators with Nonlocal Boundary Conditions.",
+    authors: "I.B. and Ross Pinsky", 
+    journal: "Israel Journal of Mathematics", 
+    volume: "169", 
+    number: "2", 
+    pages: "181--220", 
+    year: "2008", url: "" }
+  
+  - { title: "Ergodic behavior of diffusions with random jumps from the boundary",
+      authors: "I.B. and Ross Pinsky", 
+      journal: "Stochastic Processes and their Applications", 
+      volume: "119", 
+      number: "9", 
+      pages: "2855--2883", 
+      year: "2009", url: "" }
+
+  - {title: "Large Deviations For Partition Functions of Directed Polymers in an IID Field",
+   authors: "I.B.", 
+      journal: "Annales de L’Institut Henri Poincare", 
+      volume: "45", 
+      number: "3",
+      year: "2009", url=""}
+
+

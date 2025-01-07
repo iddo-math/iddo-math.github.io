@@ -1,4 +1,10 @@
-<footer class="pt-5 my-5 text-muted border-top">
+<footer class="pt-5 my-5 text-muted border-top"> 
+      {% for item in site.data.settings.links %}
+        <a href="{{ item.url }}"><i>{{ item.title }}</i></a> &ensp;&ensp;
+      {% endfor %}
+</footer>
+
+<!-- <footer class="pt-5 my-5 text-muted border-top">
   <div class="row">
     <div class="col-md-6 text-end social-media-icons">
       {% for item in site.data.settings.social %}
@@ -7,3 +13,5 @@
     </div>
   </div>
 </footer>
+-->
+
