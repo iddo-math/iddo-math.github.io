@@ -1,5 +1,4 @@
 menu:
-- {name: 'people', url: '/people'}
 - {name: 'publications', url: '/publications'}
 - {name: 'courses', url: '/courses'}
 - {name: 'cv', url: '/cv'}
@@ -22,4 +21,4 @@ social:
 - {icon: 'linkedin', link: 'https://linkedin.com/in/lenpaul'}
 
 contacts:
-- {name: 'Iddo Ben-Ari', title: 'Professor', department: 'Department of Mathematics', institution: 'University of Connecticut', institution_address: '341 Mansfield Rd, Storrs, CT 06269-1009', phone: '', email: 'iddo.ben-ari@uconn.edu', office: 'Monteith 431', image: 'assets/img/contact.jpg'}
+- {name: 'Iddo Ben-Ari', title: 'Professor', department: 'Department of Mathematics', institution: 'University of Connecticut', institution_address: '341 Mansfield Rd, Storrs, CT 06269-1009', blah: 'blah', email: 'iddo.ben-ari@uconn.edu', office: 'Monteith 431', image: 'assets/img/contact.jpg'}
