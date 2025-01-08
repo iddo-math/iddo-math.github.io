@@ -33,4 +33,4 @@ title: "Home"
 
 
 
-Here for advising? [Email me](iddo.ben-ari@uconn.edu)
+Here for advising? [Email me](mailto:iddo.ben-ari@uconn.edu)
