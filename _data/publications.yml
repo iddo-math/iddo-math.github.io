@@ -1,6 +1,6 @@
 index: 
 
-- {title: "Spectral analysis of a family of  second-order elliptic operators with nonlocal boundary condition indexed by a probability measure",
+- { title: "Spectral analysis of a family of  second-order elliptic operators with nonlocal boundary condition indexed by a probability measure",
     authors: "I.B. and Ross Pinsky", 
     journal: "Journal of Functional Analysis", 
     volume: "251", 
@@ -24,8 +24,8 @@ index:
       pages: "2855--2883", 
       year: "2009", url: "" }
 
-  - {title: "Large Deviations For Partition Functions of Directed Polymers in an IID Field",
-   authors: "I.B.", 
+  - { title: "Large Deviations For Partition Functions of Directed Polymers in an IID Field",
+      authors: "I.B.", 
       journal: "Annales de L’Institut Henri Poincare", 
       volume: "45", 
       number: "3",
