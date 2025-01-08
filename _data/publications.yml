@@ -1,34 +1,33 @@
-index: 
-
-- { title: "Spectral analysis of a family of  second-order elliptic operators with nonlocal boundary condition indexed by a probability measure",
-    authors: "I.B. and Ross Pinsky", 
-    journal: "Journal of Functional Analysis", 
-    volume: "251", 
-    number: "1", 
-    pages: "122--140", 
-    year: "2007", url: "" }
-
-  - { title: "The Asymptotic Shift for the Principal Eigenvalue for a Class of Second-Order Elliptic Operators with Nonlocal Boundary Conditions.",
-    authors: "I.B. and Ross Pinsky", 
-    journal: "Israel Journal of Mathematics", 
-    volume: "169", 
-    number: "2", 
-    pages: "181--220", 
-    year: "2008", url: "" }
-  
-  - { title: "Ergodic behavior of diffusions with random jumps from the boundary",
-      authors: "I.B. and Ross Pinsky", 
-      journal: "Stochastic Processes and their Applications", 
-      volume: "119", 
-      number: "9", 
-      pages: "2855--2883", 
-      year: "2009", url: "" }
-
-  - { title: "Large Deviations For Partition Functions of Directed Polymers in an IID Field",
-      authors: "I.B.", 
-      journal: "Annales de L’Institut Henri Poincare", 
-      volume: "45", 
-      number: "3",
-      year: "2009", url=""}
-
-
+index:
+  - {author: "I.B., Ningwei Jiang", title: "Representation and Characterization of Quasistationary Distributions for Markov Chains", year: "", journal: "Submitted", volume: "", number: "", pages: "", arxiv: "2402.11154", url: ""}
+  - {author: "I.B., Rinaldo Schinazi", title: "Can a single migrant per generation rescue a dying population?", year: "", journal: "Advances in Applied Mathematics", volume: "", number: "", pages: "", arxiv: "2304.06478", url: ""}
+  - {author: "I.B., Clayton Allard*, Shrikant Chand*, Van Hovenga*, Edith Lee*, Julia Shapiro*", title: "Quasistationary Distribution for the Invasion Model on a Complete Bipartite Graph", year: "", journal: "Journal of Stochastic Analysis", volume: "5", number: "1", pages: "Article 2", arxiv: "2204.10287", url: ""}
+  - {author: "I.B., Rinaldo Scinazi", title: "Self-similarity in an exchangeable site-dynamics model", year: "2022", journal: "Journal of Statistical Physics", volume: "188", number: "", pages: "Article 17", arxiv: "2101.00705", url: ""}
+  - {author: "I.B., Mason DiCicco*", title: "Greedy Coupling of 3-State Markov Chains", year: "", journal: "Submitted", volume: "", number: "", pages: "", url: ""}
+  - {author: "I.B., SangJoon Lee", title: "Quasi-Limiting Behavior of Drifted Brownian Motion", year: "2022", journal: "ALEA, Lat. Am. J. Probab. Math. Stat.", volume: "19", number: "", pages: "813–838", arxiv: "2001.04523", url: ""}
+  - {author: "I.B., Hugo Panzo, Philip Speegle*, Oliver Vandenberg*", title: "Quasistationary Distributions for the Voter Model on Complete Bipartite Graphs", year: "2021", journal: "ALEA, Lat. Am. J. Probab. Math. Stat.", volume: "18", number: "", pages: "421–437", arxiv: "2004.1018", url: ""}
+  - {author: "I.B., Jonah Green*, Taylor Meredith*, Hugo Panzo, Xioran Tan*", title: "Finite-Memory Elephant Random Walk and the Central Limit Theorem for Additive Functionals", year: "2021", journal: "Braz. J. Probab. Stat.", volume: "35", number: "2", pages: "242–262", url: ""}
+  - {author: "I.B., Carter Bedsole*, Grace O’Neil*", title: "Power-Law Tails in a Fitness-Driven Model for Biological Evolution", year: "", journal: "Submitted", volume: "", number: "", pages: "", arxiv: "2001.00960", url: ""}
+  - {author: "I.B., Behrang Forghani", title: "On Transformations of Markov Chains and Poisson Boundary", year: "2020", journal: "Trans. Amer. Math. Soc.", volume: "373", number: "", pages: "2207–2227", arxiv: "1909.11217", url: ""}
+  - {author: "I.B., Alexander Roitershtein, Rinaldo Schinazi", title: "A Random Walk with Catastrophes", year: "2019", journal: "Elec. J. of Probability", volume: "24", number: "28", pages: "1–21", arxiv: "1709.04780", url: ""}
+  - {author: "I.B., Roger Silva", title: "On a Local Version of the Bak-Sneppen Model", year: "2018", journal: "Journal of Statistical Physics", volume: "173", number: "2", pages: "362–380", arxiv: "1609.04420", url: ""}
+  - {author: "I.B., Hugo Panzo", title: "On the Subcritical Phase for a Homopolymer Model", year: "2017", journal: "Communications on Stochastic Analysis", volume: "11", number: "4", pages: "425–456", arxiv: "1803.09335", url: ""}
+  - {author: "I.B., Rinaldo Schinazi", title: "A Stochastic Model for the Evolution of a Quasispecies", year: "", journal: "Journal of Statistical Physics", volume: "162", number: "2", pages: "415–425", url: ""}
+  - {author: "I.B., Steven J. Miller", title: "A Probabilistic Approach to Generalized Zeckendorf Decompositions", year: "2016", journal: "SIAM J. Discrete Math", volume: "30", number: "2", pages: "1302–1332", arxiv: "1405.2379", url: ""}
+  - {author: "I.B., Steven J. Miller", title: "The Distribution of Gaps between Summands in Generalized Zeckendorf Decompositions", year: "2015", journal: "Journal of Combinatorial Theory, Series A", volume: "135", number: "", pages: "130–160", url: ""}
+  - {author: "I.B., Hugo Panzo, Elizabeth Tripp*", title: "Efficient Coupling for Random Walk with Redistribution", year: "", journal: "", volume: "", number: "", pages: "", arxiv: "1410.8234", url: ""}
+  - {author: "I.B.", title: "On Independence and Determination of Probability Measures", year: "", journal: "Journal of Theoretical Probability", volume: "28", number: "3", pages: "968–975", url: ""}
+  - {author: "I.B.", title: "Coupling for Drifted Brownian Motion on an Interval with Redistribution from the Boundary", year: "", journal: "Electronic Communications in Probability", volume: "19", number: "16", pages: "1–11", url: ""}
+  - {author: "I.B., Diana Hay, Alexander Roitershtein", title: "On Wallis-type products and Polya’s urn schemes", year: "", journal: "American Mathematical Monthly", volume: "121", number: "5", pages: "422–432", url: ""}
+  - {author: "I.B., Keith Conrad", title: "Maclaurin’s Inequality and a Generalized Bernoulli Inequality", year: "", journal: "Mathematics Magazine", volume: "87", number: "1", pages: "14–24", url: ""}
+  - {author: "I.B.", title: "An Empirical Process Interpretation of a Model of Species Survival", year: "2013", journal: "Stochastic Process. Appl.", volume: "123", number: "", pages: "475–489", url: ""}
+  - {author: "I.B.", title: "Principal Eigenvalue for Brownian Motion on a Bounded Interval with Degenerate Instantaneous Jumps", year: "2012", journal: "Electronic Journal of Probability", volume: "17", number: "87", pages: "1–13", url: ""}
+  - {author: "I.B., Michael Neumann", title: "Probabilistic Approach to Perron Root, the Group Inverse, and Applications", year: "2012", journal: "Linear and Multilinear Algebra", volume: "60", number: "1", pages: "39–63", url: ""}
+  - {author: "I.B., Michael Neumann, Olga Pryporova", title: "Inequalities for Functions of Transition Matrices", year: "2012", journal: "Linear Algebra and its Applications", volume: "436", number: "2", pages: "335–348", url: ""}
+  - {author: "I.B., Anastasios Matzavinos, Alexander Roitershtein", title: "On a species survival model", year: "2011", journal: "Electronic Communications in Probability", volume: "16", number: "", pages: "226–233", url: ""}
+  - {author: "I.B., Khalid Boushaba, Anastasios Matzavinos, Alexander Roitershtein", title: "Stochastic Analysis of the Motion of DNA Nanomechanical Bipeds", year: "2011", journal: "Bulletin of Mathematical Biology", volume: "73", number: "8", pages: "1931–1951", url: ""}
+  - {author: "I.B., Mathieu Merle, Alexander Roitershtein", title: "A random walk on Z with drift driven by its occupation time at zero", year: "2009", journal: "Stochastic Process. Appl.", volume: "119", number: "8", pages: "2682–2710", url: ""}
+  - {author: "I.B.", title: "Large Deviations For Partition Functions of Directed Polymers in an IID Field", year: "2009", journal: "Annales de L’Institut Henri Poincare", volume: "45", number: "3", pages: "770–792", url: ""}
+  - {author: "I.B., Ross Pinsky", title: "Ergodic behavior of diffusions with random jumps from the boundary", year: "2009", journal: "Stochastic Process. Appl.", volume: "119", number: "3", pages: "864–881", url: ""}
+  - {author: "I.B.", title: "The Asymptotic Shift for the Principal Eigenvalue for Second Order Elliptic Operators on Bounded Domains under Various Boundary Conditions in the Presence of Small Obstacles", year: "2009", journal: "Israel Journal of Mathematics", volume: "169", number: "2", pages: "181–220", url: ""}
+  - {author: "I.B., Ross Pinsky", title: "Spectral analysis of a family of second-order elliptic operators with nonlocal boundary condition indexed by a probability measure", year: "2007", journal: "Journal of Functional Analysis", volume: "251", number: "1", pages: "122–140", url: ""}

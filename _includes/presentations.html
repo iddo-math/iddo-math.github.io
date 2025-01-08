@@ -1,0 +1,7 @@
+
+<div markdown="1">
+    <h3 class="fw-bold border-bottom pb-3 mb-5">Selected Presentations</h3>
+    {% for item in site.data.presentations.index %}
+    <p><a href="{{ item.url }}">{{item.title}}</a>, <i>{{item.description}}</p>
+  {% endfor %}
+</div>

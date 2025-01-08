@@ -16,10 +16,11 @@
 -->
 
 <div>
-  <h3 class="fw-bold border-bottom pb-3 mb-5">Publications</h3>
+  <h3 class="fw-bold border-bottom pb-3 mb-5">Publications & Preprints</h3>
+  <ol reversed>
     {% for item in site.data.publications.index %}
-     Right here
-      <p><a href="blah">{{ item.title }}</a></p>
-    {% endfor %}
-</div>
+      <li><p>{{item.author}}: <a href="{{ item.url }}">{{item.title}}</a>, <i>{{item.journal}}</i>, <b>{{item.volume}}({{item.number}})</b>, {{item.pages}} ({{item.year}}). </p>
+      </li>    
+      {% endfor %}
+  </ol>
 </div>

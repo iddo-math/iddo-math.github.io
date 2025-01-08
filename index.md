@@ -20,8 +20,6 @@ title: "Home"
 - I work in probability theory, mostly in the area of Markov processes and their applications, see my [research](/research) page for publications and some presentations.
 - I'm usually looking for both grad and undergrad students for research work. See past projects on both my students and the Markov Chains REU  pages.
 - My [courses](/courses) page has content from some of my recent courses.
-
-
 </div>
 
 </td>

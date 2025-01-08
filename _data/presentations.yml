@@ -1,0 +1,8 @@
+index:
+- { title: "Characterization of Quasi-stationary Distributions", url: "/publications/presentations/QSD_SPA23.pdf", description: "poster at Stochastic Processes and their Applications, Lisbon (July 2023)
+"}
+- { title: "Quasi-Stationary Distributions: Existence, Uniqueness and Characterization", url: "/publications/presentations/QSD_UCCS23.pdf", description: " talk at University of Colorado, Colorado Springs (March 2023)"}
+- { title: "Quasi-Stationary Distributions for the Voter and Invasion Dynamics on Complete Bipartite Graphs", url: "/publications/presentations/VoterInvasion_UConn21.pdf",
+ description: "talk  at Symposium on Stochastic Hybrid Systems and Applications, UConn (November 2021), Utah/Arizona Probability Seminar (March 2021)"}
+- { title: "On Convergence of Random Series", url: "/publications/presentations/RandomSeries_UConn20.pdf", description: "talk at UConn Math Club (February 2020)"}
+- { title: "A survey of fitness-based models for biological evolution", url: "/publications/presentations/Fitness_Rochester18.pdf", description: "talk at University of Rochester Probability Seminar (February 2018)"}
