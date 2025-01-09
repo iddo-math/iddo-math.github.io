@@ -2,6 +2,7 @@
 layout: courses
 title: "Courses"
 ---
+## Courses ##
 For current course content visit the respective [HuskyCT](https://huskyct.uconn.edu/) page. 
 I did not thoroughly review any of the following, so be aware of errors! I'll be grateful for feedback. 
 

@@ -19,7 +19,32 @@
   <h3 class="fw-bold border-bottom pb-3 mb-5">Publications & Preprints</h3>
   <ol reversed>
     {% for item in site.data.publications.index %}
-      <li><p>{{item.author}}: <a href="{{ item.url }}">{{item.title}}</a>, <i>{{item.journal}}</i>, <b>{{item.volume}}({{item.number}})</b>, {{item.pages}} ({{item.year}}). </p>
+      <li><p>{{item.author}}:
+        {% if item.url!= null and item.url!= "" %}
+        <a href="{{ item.url }}">{{item.title}}</a>,
+         {% elsif item.arxiv!=null and item.arxiv!="" %} 
+         <a href="https://arxiv.org/abs/{{item.arxiv}}">{{item.title}}</a>,
+         {% else %}
+         {{item.title}},
+        {% endif %}
+        {% if item.journal != null and item.journal != "" %}
+         <i>{{item.journal}}</i>, 
+          {% if item.volume != null and item.volume !="" %} 
+            <b>{{item.volume}}</b>
+               {% if item.number != null and item.number != "" %}
+               <b>({{item.number}})</b>
+               {% endif %}
+             {% if item.pages != null and item.pages != "" %}
+               {{item.pages}}
+               {% endif %}
+            {% if item.year!= null and item.year!="" %}
+            ({{item.year}})
+            {% endif %}
+          {% endif %}
+        {% else %}
+       <i> arxiv:{{item.arxiv}}</i>
+        {% endif %}
+      </p>
       </li>    
       {% endfor %}
   </ol>
