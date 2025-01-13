@@ -25,7 +25,7 @@ Here for advising? Email me.
 
 </td>
 <td>
-<img src="/assets/img/iddo.jpg" style="float: right;" width="100%">
+<img src="/assets/img/Iddo.jpg" style="float: right;" width="100%">
 
 </td>
 </tr>
