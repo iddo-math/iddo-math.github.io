@@ -3,9 +3,8 @@ layout: courses
 title: "Courses"
 ---
 ## Courses ##
+This page is still under construction. 
 For current course content visit the respective [HuskyCT](https://huskyct.uconn.edu/) page. 
-
-
 
 ### Course Content ### 
 - This section is under construction, so some (or all) items/links may be unavailable/broken. I'm working on moving them here. 
