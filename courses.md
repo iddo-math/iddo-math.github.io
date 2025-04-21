@@ -14,7 +14,7 @@ For current course content visit the respective [HuskyCT](https://huskyct.uconn.
 - A nearly complete [textbook in undergraduate probability](https://iddo.uconn.edu/w/UG). I developed a WikiMedia-based environment to create it. 
 
 #### Graduate Probability  #### 
-- [Lecture notes and assignments from Fall 2023.](courses/MATH5160%20Notes.pdf)
+- [Lecture notes and assignments from Fall 2023.](MATH5160%20Notes.pdf)
 
 #### Measure and Integration ####
 - Lecture notes on $$L^p$$ spaces, the Fundamental Theorem of Calculus for Lebesgue integral and Differentiation. 
