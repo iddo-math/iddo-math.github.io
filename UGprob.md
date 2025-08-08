@@ -2,7 +2,6 @@
 title: "An Article with Custom Environments"
 layout: "UGprob"
 ---
-
 Here's an important result in {% ref pythagoras %}. The proof is quite elegant.
 
 {% thm "Pythagorean Theorem" label="pythagoras" %}
