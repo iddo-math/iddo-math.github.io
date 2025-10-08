@@ -2,6 +2,11 @@
 title: "An Article with Custom Environments"
 layout: "UGprob"
 ---
+{% comment %}
+  This is a block of Liquid code that will be commented out.
+  {% include some_file.html %}
+  {% assign my_variable = "some_value" %}
+
 Here's an important result in {% ref pythagoras %}. The proof is quite elegant.
 
 {% thm "Pythagorean Theorem" label="pythagoras" %}
@@ -25,3 +30,4 @@ And now for an example related to the previous lemma.
 {% xmpl "Application of the Triangle Inequality" %}
 Let's consider a triangle with side lengths $a=3$, $b=4$, and $c=5$. Since $3+4 > 5$, this is a valid triangle.
 {% endxmpl %}
+{% endcomment %}
