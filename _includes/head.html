@@ -9,4 +9,19 @@
   <link rel="shortcut icon" href="{{ site.github.url }}/assets/favicon.ico">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+<!-- MathJax v4 config + loader -->
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/tagformat'] },
+    tex: {
+      packages: { '[+]': ['tagformat'] },
+      tags: 'ams',
+      tagformat: {
+        number: (n) => (MathJax.config._currentSection || 0) + '.' + n,
+        id: (tag) => 'eqn-' + tag
+      }
+    }
+  };
+</script>
+https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js
 </head>
