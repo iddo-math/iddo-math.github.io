@@ -50,7 +50,7 @@
     const p = opt.match(/width\s*=\s*([0-9.]+%)/i);
     return p ? p[1] : '';
   }
-
+  
   function wrapSections(root) {
     const level = Math.max(1, Math.min(6, SECTION_LEVEL));
     const headings = [...root.querySelectorAll(`h${level}`)];
@@ -86,31 +86,8 @@
   wraps.push(wrap);
 }
     return wraps;
-  }
-for (let i = 0; i < headings.length; i++) {
-  const h = headings[i];
-  const lab = h.innerHTML.match(/\\label\{([^}]+)\}/);
-  if (lab) {
-    h.id = lab[1];
-    h.innerHTML = h.innerHTML.replace(lab[0], '');
-  }
-  const wrap = document.createElement('div');
-  wrap.className = 'sec-block';
-  wrap.dataset.sec = String(i + 1);
-  let node = h;
-  while (node) {
-    const next = node.nextSibling;
-    wrap.appendChild(node);
-    if (!next) break;
-    if (next.nodeType === 1 && next.tagName.toLowerCase() === `h${level}`) break;
-    node = next;
-  }
-  // FIX: Insert the wrapper before the heading in root
-  root.insertBefore(wrap, h);
-  wraps.push(wrap);
 }
- -->
-
+  
   function processSection(wrap, secNo) {
     const sharedCounts = {};
     SHARED_GROUPS.forEach(g => sharedCounts[g.groupName] = 0);
