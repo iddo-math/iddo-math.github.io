@@ -3,7 +3,6 @@
   window.MathJax = {
     loader: { load: ['[tex]/tagformat'] },
     tex: {
-      // Use array syntax for better v4 compatibility:
       packages: ['base', 'ams', 'tagformat'],
       tags: 'ams',
       inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -50,8 +49,14 @@
     const p = opt.match(/width\s*=\s*([0-9.]+%)/i);
     return p ? p[1] : '';
   }
-  
+
+  function alreadyWrapped(root) {
+    return !!root.querySelector('.sec-block');
+  }
+
   function wrapSections(root) {
+    // Prevent double-wrapping
+    if (alreadyWrapped(root)) return Array.from(root.querySelectorAll('.sec-block'));
     const level = Math.max(1, Math.min(6, SECTION_LEVEL));
     const headings = [...root.querySelectorAll(`h${level}`)];
     if (headings.length === 0) {
@@ -63,37 +68,37 @@
       return [wrap];
     }
     const wraps = [];
-for (let i = 0; i < headings.length; i++) {
-  const h = headings[i];
-  const lab = h.innerHTML.match(/\\label\{([^}]+)\}/);
-  if (lab) {
-    h.id = lab[1];
-    h.innerHTML = h.innerHTML.replace(lab[0], '');
-  }
-  const wrap = document.createElement('div');
-  wrap.className = 'sec-block';
-  wrap.dataset.sec = String(i + 1);
+    for (let i = 0; i < headings.length; i++) {
+      const h = headings[i];
+      const lab = h.innerHTML.match(/\\label\{([^}]+)\}/);
+      if (lab) {
+        h.id = lab[1];
+        h.innerHTML = h.innerHTML.replace(lab[0], '');
+      }
+      const wrap = document.createElement('div');
+      wrap.className = 'sec-block';
+      wrap.dataset.sec = String(i + 1);
 
-  // Culprit!
- if (h.parentNode === root) {
-  root.insertBefore(wrap, h);
-} else {
-  root.appendChild(wrap);
-}
+      // Only insert if not already wrapped
+      if (h.parentNode === root) {
+        root.insertBefore(wrap, h);
+      } else {
+        root.appendChild(wrap);
+      }
 
-  let node = h;
-  while (node) {
-    const next = node.nextSibling;
-    wrap.appendChild(node);
-    if (!next) break;
-    if (next.nodeType === 1 && next.tagName.toLowerCase() === `h${level}`) break;
-    node = next;
-  }
-  wraps.push(wrap);
-}
+      let node = h;
+      while (node) {
+        const next = node.nextSibling;
+        wrap.appendChild(node);
+        if (!next) break;
+        if (next.nodeType === 1 && next.tagName.toLowerCase() === `h${level}`) break;
+        node = next;
+      }
+      wraps.push(wrap);
+    }
     return wraps;
-}
-  
+  }
+
   function processSection(wrap, secNo) {
     const sharedCounts = {};
     SHARED_GROUPS.forEach(g => sharedCounts[g.groupName] = 0);
@@ -143,80 +148,4 @@ for (let i = 0; i < headings.length; i++) {
     let figCount = 0;
     html = html.replace(figRegex, (_, body) => {
       let label = null;
-      body = body.replace(/\\label\{([^}]+)\}/, (m, id) => { label = id; return ''; });
-      let caption = '';
-      body = body.replace(/\\caption\{([^}]+)\}/, (m, cap) => { caption = cap; return ''; });
-      const imgMatch = body.match(/\\includegraphics(?:\[(.*?)\])?\{([^}]+)\}/);
-      const imgSrc = imgMatch ? imgMatch[2] : '';
-      const imgWidth = imgMatch ? parseWidth(imgMatch[1]) : '';
-      figCount++;
-      if (label) refMap.set(label, { text: `${FIGURE_TITLE} ${secNo}.${figCount}`, id: label });
-      return `<figure${label ? ` id="${label}"` : ''}>
-        <img src="${imgSrc}"${imgWidth ? ` style="width:${imgWidth};"` : ''} />
-        <figcaption>${FIGURE_TITLE} ${secNo}.${figCount}: ${caption}</figcaption>
-      </figure>`;
-    });
-
-    wrap.innerHTML = html;
-  }
-
-  function rewriteRefs(root) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const targets = [];
-    while (walker.nextNode()) {
-      const s = walker.currentNode.nodeValue;
-      if (s && /\\ref\{[^}]+\}/.test(s)) targets.push(walker.currentNode);
-    }
-    targets.forEach(node => {
-      const span = document.createElement('span');
-      span.innerHTML = node.nodeValue.replace(/\\ref\{([^}]+)\}/g, (_, id) => {
-        if (refMap.has(id)) {
-          const r = refMap.get(id);
-          return `<a href="#${r.id}">${r.text}</a>`;
-        }
-        return `\\ref{${id}}`;
-      });
-      node.parentNode.replaceChild(span, node);
-    });
-  }
-
-  async function typesetSections(blocks) {
-    if (!window.MathJax || !MathJax.typesetPromise) return;
-    for (const block of blocks) {
-      MathJax.config._currentSection = parseInt(block.dataset.sec, 10) || 0;
-      await MathJax.typesetPromise([block]);
-    }
-  }
-
-  function contentRoot() {
-    return document.querySelector('main, article, #content') || document.body;
-  }
-
-  function protectCode(root) {
-    const saved = [];
-    root.querySelectorAll('pre, code, script, style').forEach((el, i) => {
-      const token = `__CODEBIN_${i}__`;
-      saved.push({ token, html: el.outerHTML });
-      const span = document.createElement('span'); span.textContent = token;
-      el.replaceWith(span);
-    });
-    return saved;
-  }
-
-  function restoreCode(root, saved) {
-    let html = root.innerHTML;
-    for (const { token, html: frag } of saved) html = html.replace(token, frag);
-    root.innerHTML = html;
-  }
-
-  document.addEventListener('DOMContentLoaded', async () => {
-    const root = contentRoot();
-    const saved = protectCode(root);
-    const blocks = wrapSections(root);
-    blocks.forEach((block, i) => processSection(block, i + 1));
-    restoreCode(root, saved);
-    await typesetSections(blocks);
-    rewriteRefs(root);
-  });
-})();
-</script>
+      body = body.replace(/\\label\{([^}]+)\}/, (m, id) => {
