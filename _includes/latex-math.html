@@ -3,7 +3,8 @@
   window.MathJax = {
     loader: { load: ['[tex]/tagformat'] },
     tex: {
-      packages: { '[+]': ['tagformat'] },
+      // Use array syntax for better v4 compatibility:
+      packages: ['base', 'ams', 'tagformat'],
       tags: 'ams',
       inlineMath: [['$', '$'], ['\\(', '\\)']],
       displayMath: [['$$', '$$'], ['\\[', '\\]']],
@@ -41,11 +42,6 @@
   const FIGURE_TITLE = 'Figure';
   const ADD_QED = true;
   const refMap = new Map();
-
-     let label = null;
-    s = s.replace(/\\label\{([^}]+)\}/, (m, id) => { label = id; return ''; });
-    return { s, label };
-  }
 
   function parseWidth(opt) {
     if (!opt) return '';
@@ -149,7 +145,7 @@
       figCount++;
       if (label) refMap.set(label, { text: `${FIGURE_TITLE} ${secNo}.${figCount}`, id: label });
       return `<figure${label ? ` id="${label}"` : ''}>
-        ${imgSrc}
+        <img src="${imgSrc}"${imgWidth ? ` style="width:${imgWidth};"` : ''} />
         <figcaption>${FIGURE_TITLE} ${secNo}.${figCount}: ${caption}</figcaption>
       </figure>`;
     });
@@ -169,7 +165,7 @@
       span.innerHTML = node.nodeValue.replace(/\\ref\{([^}]+)\}/g, (_, id) => {
         if (refMap.has(id)) {
           const r = refMap.get(id);
-          return `<${r.id}${r.text}</a>`;
+          return `<a href="#${r.id}">${r.text}</a>`;
         }
         return `\\ref{${id}}`;
       });
@@ -217,18 +213,3 @@
   });
 })();
 </script>
-
-<style>
-section.theorem, section.lemma, section.proposition, section.corollary,
-section.definition, section.remark, section.example, section.proof {
-  border-left: 4px solid #4b8;
-  background: #f9fffc;
-  padding: .75rem 1rem;
-  margin: 1.25rem 0;
-}
-section.proof { border-color: #888; background: #fbfbfb; }
-.thm-heading { font-weight: 600; margin-bottom: .35rem; }
-figure { text-align: center; margin: 1.5rem auto; }
-figure img { display: block; margin: 0 auto; }
-figcaption { font-style: italic; margin-top: .5rem; }
-</style>
