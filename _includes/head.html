@@ -18,10 +18,10 @@
       packages: { '[+]': ['tagformat'] },
       // Turn on LaTeX-like auto numbering + \label \ref \eqref
       tags: 'ams',
-      // Enable $...$ inline math (MathJax doesn't do this by default)
+      // Enable $...$ inline math (off by default in MathJax)
       inlineMath: [['$', '$'], ['\\(', '\\)']],
       displayMath: [['$$', '$$'], ['\\[', '\\]']],
-      // Customize equation tags as <section>.<n> once your footer script sets _currentSection
+      // Show equation tags as <section>.<n> (our footer script sets _currentSection)
       tagformat: {
         number: (n) => (MathJax.config._currentSection || 0) + '.' + n,
         id: (tag) => 'eqn-' + tag
@@ -29,6 +29,7 @@
     }
   };
 </script>
+
 <!-- Then the loader (one time only) -->
-https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@4pt>
 </head>
