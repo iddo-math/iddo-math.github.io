@@ -1,5 +1,4 @@
 <!-- _includes/latex-math.html  (Self-contained: config + loader + parser) -->
-<!-- MathJax v4: config FIRST -->
 <script>
   window.MathJax = {
     loader: { load: ['[tex]/tagformat'] },
@@ -18,8 +17,8 @@
     }
   };
 </script>
-<!-- Then the loader (one time only) -->
-https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js</script>
+
+<script https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js>
 
 <!-- ======= Parser (same as Option A) ======= -->
 <!-- _includes/latex-math.html  (Parser-only: no MathJax loader here) -->
