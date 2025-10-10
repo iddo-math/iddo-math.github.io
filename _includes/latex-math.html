@@ -39,25 +39,6 @@ const FIGURE_TITLE = 'Figure';
 /** Proofs: add □ at end if \qedhere not present *******************************/
 const ADD_QED = true;
 </script>
-<!-- 
-<!-- MathJax: enable AMS equation numbering and load tagformat to prefix section -->
-<script>
-  // We will typeset by section and set MathJax.config._currentSection before each
-  window.MathJax = {
-    loader: { load: ['[tex]/tagformat'] },
-    tex: {
-      packages: { '[+]': ['tagformat'] },
-      tags: 'ams',     // enable LaTeX-like \label / \ref / \eqref for equations
-      // format equation numbers as "<section>.<n>"
-      tagformat: {
-        number: (n) => (MathJax.config._currentSection || 0) + '.' + n,
-        id:     (tag)=> 'eqn-' + tag   // readable anchors like eqn-2.3
-      }
-    }
-  };
-</script>
-<script async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtmlpt>
--->
 /* ============================================================================
    LaTeX-like client preprocessor:
    - Wrap content into per-section blocks (h{SECTION_LEVEL} = new section)
