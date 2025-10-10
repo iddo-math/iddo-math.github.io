@@ -1,0 +1,333 @@
+<!-- === MathJax + LaTeX-like environments (section-based numbering, shared counters) === -->
+<!-- CONFIG: tweak these in one place -->
+<script>
+/** USER OPTIONS ***************************************************************
+ * Which heading level should behave as a "section" for numbering?
+ * (2 => <h2> === Section 1, 3 => <h3> === Section 1, …)
+ *****************************************************************************/
+const SECTION_LEVEL = 2;
+
+/** Shared counters per section (like amsthm [theorem]-sharing) ***************
+ * All kinds in the same group share ONE counter sequence per section.
+ * Title for display is taken from `titleByKind[kind]` or defaultTitle.
+ *****************************************************************************/
+const SHARED_GROUPS = [
+  {
+    groupName: 'thm',
+    defaultTitle: 'Theorem',
+    kinds: ['theorem','lemma','proposition','corollary'],
+    titleByKind: {
+      theorem: 'Theorem',
+      lemma: 'Lemma',
+      proposition: 'Proposition',
+      corollary: 'Corollary'
+    }
+  }
+];
+
+/** Solo kinds get their own independent counters per section ******************/
+const SOLO_KINDS = [
+  { name: 'definition', title: 'Definition' },
+  { name: 'remark',     title: 'Remark'    },
+  { name: 'example',    title: 'Example'   },
+  // proofs are unnumbered by default:
+  { name: 'proof',      title: 'Proof', number: false }
+];
+
+/** Figure caption label ********************************************************/
+const FIGURE_TITLE = 'Figure';
+/** Proofs: add □ at end if \qedhere not present *******************************/
+const ADD_QED = true;
+</script>
+
+<!-- MathJax: enable AMS equation numbering and load tagformat to prefix section -->
+<script>
+  // We will typeset by section and set MathJax.config._currentSection before each
+  window.MathJax = {
+    loader: { load: ['[tex]/tagformat'] },
+    tex: {
+      packages: { '[+]': ['tagformat'] },
+      tags: 'ams',     // enable LaTeX-like \label / \ref / \eqref for equations
+      // format equation numbers as "<section>.<n>"
+      tagformat: {
+        number: (n) => (MathJax.config._currentSection || 0) + '.' + n,
+        id:     (tag)=> 'eqn-' + tag   // readable anchors like eqn-2.3
+      }
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtmlpt>
+/* ============================================================================
+   LaTeX-like client preprocessor:
+   - Wrap content into per-section blocks (h{SECTION_LEVEL} = new section)
+   - Parse \begin{theorem|lemma|...} ... \end{...}, with \label and optional [Title]
+   - Shared counters per section for theorem-like groups; solo kinds can be independent
+   - Parse \begin{figure} ... \end{figure} with \includegraphics + \caption + \label
+   - Replace text \ref{...} pointing to theorems/figures with clickable "Theorem 2.3"
+   - MathJax typeset is run per section so equations are tagged as <section>.<n>
+   References:
+     • MathJax equation auto-numbering & \label/\eqref: https://docs.mathjax.org/en/latest/input/tex/eqnumbers.html
+     • MathJax tagFormat customization: https://docs.mathjax.org/en/v3.2/input/tex/extensions/index.html
+       and configuration example: https://docs.mathjax.org/en/v3.0/options/index.html
+============================================================================ */
+
+(function () {
+  // UTIL: protect code/pre/math blocks from text replacements
+  function protectCode(root) {
+    const saved = [];
+    root.querySelectorAll('pre, code, script, style').forEach((el, i) => {
+      const token = `__CODEBIN_${i}__`;
+      saved.push({ token, html: el.outerHTML });
+      const span = document.createElement('span');
+      span.textContent = token;
+      el.replaceWith(span);
+    });
+    return saved;
+  }
+  function restoreCode(root, saved) {
+    let html = root.innerHTML;
+    for (const {token, html: frag} of saved) html = html.replace(token, frag);
+    root.innerHTML = html;
+  }
+
+  // Where is the main content?
+  function contentRoot() {
+    return document.querySelector('main') ||
+           document.querySelector('article') ||
+           document.getElementById('content') ||
+           document.body;
+  }
+
+  // Extract and remove a \label{...} from a string; return {s, label}
+  function extractLabel(s) {
+    let label = null;
+    s = s.replace(/\\label\{([^}]+)\}/, (m, id) => { label = id; return ''; });
+    return { s, label };
+  }
+
+  // Parse width=... in \includegraphics options; return CSS width
+  function parseWidthFromOptions(opt) {
+    if (!opt) return '';
+    // width=0.6\textwidth => 60%
+    const m = opt.match(/width\s*=\s*([0-9.]+)\\textwidth/);
+    if (m) return (parseFloat(m[1]) * 100) + '%';
+    // width=60% plain (rare in LaTeX, but allow it)
+    const p = opt.match(/width\s*=\s*([0-9.]+%)/);
+    if (p) return p[1];
+    return '';
+  }
+
+  // Build section wrappers around H{SECTION_LEVEL}
+  function wrapSections(root) {
+    const level = Math.max(1, Math.min(6, SECTION_LEVEL));
+    const headings = [...root.querySelectorAll(`h${level}`)];
+    if (headings.length === 0) {
+      const wrap = document.createElement('div');
+      wrap.className = 'sec-block';
+      wrap.dataset.sec = '1';
+      while (root.firstChild) wrap.appendChild(root.firstChild);
+      root.appendChild(wrap);
+      return [wrap];
+    }
+    const wraps = [];
+    for (let i = 0; i < headings.length; i++) {
+      const h = headings[i];
+      // Allow \label{sec:...} inside heading text
+      const lab = h.innerHTML.match(/\\label\{([^}]+)\}/);
+      if (lab) {
+        h.id = lab[1];
+        h.innerHTML = h.innerHTML.replace(lab[0],'');
+      }
+      const wrap = document.createElement('div');
+      wrap.className = 'sec-block';
+      wrap.dataset.sec = String(i+1);
+
+      // Move this heading and following siblings (until next heading of same level)
+      let node = h;
+      while (node && !(node.nodeType === 1 && node.tagName.toLowerCase() === `h${level}` && node !== h)) {
+        const next = node.nextSibling;
+        wrap.appendChild(node);
+        if (!next) break;
+        if (next.nodeType === 1 && next.tagName.toLowerCase() === `h${level}`) break;
+        node = next;
+      }
+      // Insert wrapper
+      root.insertBefore(wrap, wrap.firstChild);
+      wraps.push(wrap);
+    }
+    return wraps;
+  }
+
+  // Numbering maps
+  const refMap = new Map(); // label -> {text, id}
+
+  function processTheoremsAndFiguresInSection(wrap, secNo) {
+    // Per-section counters
+    const sharedCounts = {};
+    SHARED_GROUPS.forEach(g => sharedCounts[g.groupName] = 0);
+
+    const soloCounts = {};
+    SOLO_KINDS.forEach(k => soloCounts[k.name] = 0);
+
+    // Theorem-like environments
+    const allKinds = [
+      ...SHARED_GROUPS.flatMap(g => g.kinds),
+      ...SOLO_KINDS.map(k => k.name)
+    ];
+    const kindSet = new Set(allKinds);
+    const envRegex = new RegExp(
+      String.raw`\\begin\{(${[...kindSet].join('|')})\}(?:\[(.*?)\])?([\s\S]*?)\\end\{\1\}`,
+      'g'
+    );
+
+    let html = wrap.innerHTML;
+
+    html = html.replace(envRegex, (_, kind, optTitle, body) => {
+      // Extract \label{...}
+      let { s: inner, label } = extractLabel(body);
+
+      // Shared or solo?
+      const sg = SHARED_GROUPS.find(g => g.kinds.includes(kind));
+      const sk = SOLO_KINDS.find(k => k.name === kind);
+
+      let titleText = (sg && sg.titleByKind[kind]) || (sg && sg.defaultTitle) || (sk && sk.title) || 'Theorem';
+      let numberString = '';
+      let isNumbered = true;
+
+      if (sg) {
+        sharedCounts[sg.groupName] += 1;
+        numberString = `${secNo}.${sharedCounts[sg.groupName]}`;
+      } else if (sk) {
+        if (sk.number === false) {
+          isNumbered = false;
+        } else {
+          soloCounts[sk.name] += 1;
+          numberString = `${secNo}.${soloCounts[sk.name]}`;
+        }
+      } else {
+        // default fallback
+        numberString = `${secNo}.?`;
+      }
+
+      // Prepare heading
+      let heading = (isNumbered)
+          ? `${titleText} ${numberString}${optTitle ? ' ('+optTitle+')' : ''}`
+          : `${titleText}.`;
+
+      // Save ref display text for \ref
+      if (label && isNumbered) {
+        refMap.set(label, { text: `${titleText} ${numberString}`, id: label });
+      }
+
+      // Add □ to proofs if desired
+      if (kind === 'proof' && /\\qedhere/.test(inner) === false && ADD_QED) {
+        inner += ' \\qquad \\square';
+      }
+
+      const idAttr = label ? ` id="${label}"` : '';
+      return `<section class="${kind}"${idAttr}>
+        <div class="thm-heading">${heading}</div>
+        ${inner.trim()}
+      </section>`;
+    });
+
+    // Figures
+    const figRegex = /\\begin\{figure\}([\s\S]*?)\\end\{figure\}/g;
+    let figCount = 0;
+    html = html.replace(figRegex, (_, body) => {
+      let { s: rest, label } = extractLabel(body);
+      let cap = '';
+      rest = rest.replace(/\\caption\{([^}]+)\}/, (m, t) => { cap = t; return ''; });
+
+      // \includegraphics[options]{path}
+      let src = '', cssW = '';
+      rest = rest.replace(/\\includegraphics(?:\[(.*?)\])?\{([^}]+)\}/, (m, opt, path) => {
+        src = path;
+        cssW = parseWidthFromOptions(opt);
+        return '';
+      });
+
+      figCount += 1;
+      const num = `${secNo}.${figCount}`;
+      const idAttr = label ? ` id="${label}"` : '';
+      if (label) refMap.set(label, { text: `${FIGURE_TITLE} ${num}`, id: label });
+
+      const style = cssW ? ` style="max-width:100%; width:${cssW}"` : ' style="max-width:100%;"';
+      return `<figure${idAttr}>
+        ${src ? `<{src}` : ''}
+        <figcaption>${FIGURE_TITLE} ${num}: ${cap || ''}</figcaption>
+      </figure>`;
+    });
+
+    wrap.innerHTML = html;
+  }
+
+  // Replace text \ref{...} for theorems/figures (equations left to MathJax via \eqref)
+  function rewriteTextRefs(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const targets = [];
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      const s = node.nodeValue;
+      if (s && /\\ref\{[^}]+\}/.test(s)) targets.push(node);
+    }
+    targets.forEach(node => {
+      const span = document.createElement('span');
+      span.innerHTML = node.nodeValue.replace(/\\ref\{([^}]+)\}/g, (_, id) => {
+        if (refMap.has(id)) {
+          const { text, id: anchor } = refMap.get(id);
+          return `#${anchor}${text}</a>`;
+        }
+        // leave untouched; if it's an equation, prefer \eqref inside math
+        return `\\ref{${id}}`;
+      });
+      node.parentNode.replaceChild(span, node);
+    });
+  }
+
+  // Typeset equations with MathJax per section so numbering is SECTION.N
+  async function typesetBySections(wraps) {
+    if (!window.MathJax || !MathJax.typesetPromise) return;
+    for (const wrap of wraps) {
+      MathJax.config._currentSection = parseInt(wrap.dataset.sec, 10);
+      await MathJax.typesetPromise([wrap]);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', async function () {
+    const root = contentRoot();
+    const saved = protectCode(root);
+
+    // Wrap content into section blocks & process each
+    const wraps = wrapSections(root);
+    for (const wrap of wraps) {
+      const secNo = parseInt(wrap.dataset.sec, 10);
+      processTheoremsAndFiguresInSection(wrap, secNo);
+    }
+
+    restoreCode(root, saved);
+
+    // 1) Let MathJax typeset each section with the right section number for equations
+    await typesetBySections(wraps);
+
+    // 2) Now rewrite text \ref{...} for theorem/figure references (equations use \eqref)
+    rewriteTextRefs(root);
+  });
+})();
+</script>
+
+<style>
+/* Simple, readable styling */
+section.theorem, section.lemma, section.proposition, section.corollary,
+section.definition, section.remark, section.example, section.proof {
+  border-left: 4px solid #4b8;
+  background: #f9fffc;
+  padding: .75rem 1rem;
+  margin: 1.25rem 0;
+}
+section.proof { border-color:#888; background:#fbfbfb; }
+.thm-heading { font-weight: 600; margin-bottom: .35rem; }
+figure { text-align: center; margin: 1.5rem auto; }
+figure img { display:block; margin: 0 auto; }
+figcaption { font-style: italic; margin-top: .5rem; }
+</style>
