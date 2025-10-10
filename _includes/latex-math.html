@@ -1,15 +1,12 @@
-<!-- _includes/latex-math.html  (Self-contained: config + loader + parser) -->
+<!-- MathJax v4: config FIRST -->
 <script>
   window.MathJax = {
     loader: { load: ['[tex]/tagformat'] },
     tex: {
       packages: { '[+]': ['tagformat'] },
-      // LaTeX-like auto numbering + \label \ref \eqref
       tags: 'ams',
-      // Enable $...$ inline math (off by default)
       inlineMath: [['$', '$'], ['\\(', '\\)']],
       displayMath: [['$$', '$$'], ['\\[', '\\]']],
-      // Show equation tags as <section>.<n>
       tagformat: {
         number: (n) => (MathJax.config._currentSection || 0) + '.' + n,
         id: (tag) => 'eqn-' + tag
@@ -17,58 +14,182 @@
     }
   };
 </script>
+<script async src="https://cdn.jsdelivr.net/npm/math/script>
 
-<script https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js>
-
-<!-- ======= Parser (same as Option A) ======= -->
-<!-- _includes/latex-math.html  (Parser-only: no MathJax loader here) -->
-<script>
-/** CONFIG *********************************************************************
- * Heading level that starts a new "section" for numbering (2 => <h2>, 3 => <h3>, …)
- *****************************************************************************/
-const SECTION_LEVEL = 2;
-
-/** Shared counters per section (amsthm-like sharing) **************************/
-const SHARED_GROUPS = [
-  {
-    groupName: 'thm',
-    defaultTitle: 'Theorem',
-    kinds: ['theorem','lemma','proposition','corollary'],
-    titleByKind: {
-      theorem: 'Theorem',
-      lemma: 'Lemma',
-      proposition: 'Proposition',
-      corollary: 'Corollary'
-    }
-  }
-];
-
-/** Solo kinds (own counters per section; set number:false to keep unnumbered) **/
-const SOLO_KINDS = [
-  { name: 'definition', title: 'Definition' },
-  { name: 'remark',     title: 'Remark'    },
-  { name: 'example',    title: 'Example'   },
-  { name: 'proof',      title: 'Proof', number: false } // unnumbered by default
-];
-
-/** Figure label ****************************************************************/
-const FIGURE_TITLE = 'Figure';
-
-/** Add □ to proofs unless \qedhere present ************************************/
-const ADD_QED = true;
-
-/** Debug logging ***************************************************************/
-const DEBUG = false;
-</script>
-
+<!-- Theorem/Figure Parser -->
 <script>
 (function () {
-  // ---------- utilities ----------
-  function log(...a){ if (DEBUG && window.console) console.log('[latex-math]', ...a); }
-  function contentRoot(){
+  const SECTION_LEVEL = 2;
+  const SHARED_GROUPS = [
+    {
+      groupName: 'thm',
+      defaultTitle: 'Theorem',
+      kinds: ['theorem','lemma','proposition','corollary'],
+      titleByKind: {
+        lemma: 'Lemma',
+        proposition: 'Proposition',
+        corollary: 'Corollary'
+      }
+    }
+  ];
+  const SOLO_KINDS = [
+    { name: 'definition', title: 'Definition' },
+    { name: 'remark',     title: 'Remark' },
+    { name: 'example',    title: 'Example' },
+    { name: 'proof',      title: 'Proof', number: false }
+  ];
+  const FIGURE_TITLE = 'Figure';
+  const ADD_QED = true;
+  const refMap = new Map();
+
+     let label = null;
+    s = s.replace(/\\label\{([^}]+)\}/, (m, id) => { label = id; return ''; });
+    return { s, label };
+  }
+
+  function parseWidth(opt) {
+    if (!opt) return '';
+    const m = opt.match(/width\s*=\s*([0-9.]+)\\textwidth/i);
+    if (m) return (parseFloat(m[1]) * 100) + '%';
+    const p = opt.match(/width\s*=\s*([0-9.]+%)/i);
+    return p ? p[1] : '';
+  }
+
+  function wrapSections(root) {
+    const level = Math.max(1, Math.min(6, SECTION_LEVEL));
+    const headings = [...root.querySelectorAll(`h${level}`)];
+    if (headings.length === 0) {
+      const wrap = document.createElement('div');
+      wrap.className = 'sec-block';
+      wrap.dataset.sec = '1';
+      while (root.firstChild) wrap.appendChild(root.firstChild);
+      root.appendChild(wrap);
+      return [wrap];
+    }
+    const wraps = [];
+    for (let i = 0; i < headings.length; i++) {
+      const h = headings[i];
+      const lab = h.innerHTML.match(/\\label\{([^}]+)\}/);
+      if (lab) {
+        h.id = lab[1];
+        h.innerHTML = h.innerHTML.replace(lab[0], '');
+      }
+      const wrap = document.createElement('div');
+      wrap.className = 'sec-block';
+      wrap.dataset.sec = String(i + 1);
+      let node = h;
+      while (node) {
+        const next = node.nextSibling;
+        wrap.appendChild(node);
+        if (!next) break;
+        if (next.nodeType === 1 && next.tagName.toLowerCase() === `h${level}`) break;
+        node = next;
+      }
+      root.insertBefore(wrap, wrap.firstChild);
+      wraps.push(wrap);
+    }
+    return wraps;
+  }
+
+  function processSection(wrap, secNo) {
+    const sharedCounts = {};
+    SHARED_GROUPS.forEach(g => sharedCounts[g.groupName] = 0);
+    const soloCounts = {};
+    SOLO_KINDS.forEach(k => soloCounts[k.name] = 0);
+
+    const allKinds = [...SHARED_GROUPS.flatMap(g => g.kinds), ...SOLO_KINDS.map(k => k.name)];
+    const envRegex = new RegExp(
+      String.raw`\\begin\{(${allKinds.join('|')})\}(?:\[(.*?)\])?([\s\S]*?)\\end\{\1\}`,
+      'g'
+    );
+
+    let html = wrap.innerHTML;
+    html = html.replace(envRegex, (_, kind, optTitle, body) => {
+      let label = null;
+      body = body.replace(/\\label\{([^}]+)\}/, (m, id) => { label = id; return ''; });
+      const sg = SHARED_GROUPS.find(g => g.kinds.includes(kind));
+      const sk = SOLO_KINDS.find(k => k.name === kind);
+      let title = (sg && sg.titleByKind[kind]) || (sg && sg.defaultTitle) || (sk && sk.title) || 'Theorem';
+      let number = '';
+      let isNumbered = true;
+
+      if (sg) {
+        sharedCounts[sg.groupName]++;
+        number = `${secNo}.${sharedCounts[sg.groupName]}`;
+      } else if (sk) {
+        if (sk.number === false) {
+          isNumbered = false;
+        } else {
+          soloCounts[sk.name]++;
+          number = `${secNo}.${soloCounts[sk.name]}`;
+        }
+      }
+
+      if (kind === 'proof' && ADD_QED && !/\\qedhere/.test(body)) {
+        body += ' \\qquad \\square';
+      }
+
+      const heading = isNumbered ? `${title} ${number}${optTitle ? ' (' + optTitle + ')' : ''}` : `${title}.`;
+      if (label && isNumbered) refMap.set(label, { text: `${title} ${number}`, id: label });
+      return `<section class="${kind}"${label ? ` id="${label}"` : ''}>
+        <div class="thm-heading">${heading}</div>${body.trim()}
+      </section>`;
+    });
+
+    const figRegex = /\\begin\{figure\}([\s\S]*?)\\end\{figure\}/g;
+    let figCount = 0;
+    html = html.replace(figRegex, (_, body) => {
+      let label = null;
+      body = body.replace(/\\label\{([^}]+)\}/, (m, id) => { label = id; return ''; });
+      let caption = '';
+      body = body.replace(/\\caption\{([^}]+)\}/, (m, cap) => { caption = cap; return ''; });
+      const imgMatch = body.match(/\\includegraphics(?:\[(.*?)\])?\{([^}]+)\}/);
+      const imgSrc = imgMatch ? imgMatch[2] : '';
+      const imgWidth = imgMatch ? parseWidth(imgMatch[1]) : '';
+      figCount++;
+      if (label) refMap.set(label, { text: `${FIGURE_TITLE} ${secNo}.${figCount}`, id: label });
+      return `<figure${label ? ` id="${label}"` : ''}>
+        ${imgSrc}
+        <figcaption>${FIGURE_TITLE} ${secNo}.${figCount}: ${caption}</figcaption>
+      </figure>`;
+    });
+
+    wrap.innerHTML = html;
+  }
+
+  function rewriteRefs(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const targets = [];
+    while (walker.nextNode()) {
+      const s = walker.currentNode.nodeValue;
+      if (s && /\\ref\{[^}]+\}/.test(s)) targets.push(walker.currentNode);
+    }
+    targets.forEach(node => {
+      const span = document.createElement('span');
+      span.innerHTML = node.nodeValue.replace(/\\ref\{([^}]+)\}/g, (_, id) => {
+        if (refMap.has(id)) {
+          const r = refMap.get(id);
+          return `<${r.id}${r.text}</a>`;
+        }
+        return `\\ref{${id}}`;
+      });
+      node.parentNode.replaceChild(span, node);
+    });
+  }
+
+  async function typesetSections(blocks) {
+    if (!window.MathJax || !MathJax.typesetPromise) return;
+    for (const block of blocks) {
+      MathJax.config._currentSection = parseInt(block.dataset.sec, 10) || 0;
+      await MathJax.typesetPromise([block]);
+    }
+  }
+
+  function contentRoot() {
     return document.querySelector('main, article, #content') || document.body;
   }
-  function protectCode(root){
+
+  function protectCode(root) {
     const saved = [];
     root.querySelectorAll('pre, code, script, style').forEach((el, i) => {
       const token = `__CODEBIN_${i}__`;
@@ -78,196 +199,26 @@ const DEBUG = false;
     });
     return saved;
   }
-  function restoreCode(root, saved){
+
+  function restoreCode(root, saved) {
     let html = root.innerHTML;
-    for (const {token, html:frag} of saved) html = html.replace(token, frag);
+    for (const { token, html: frag } of saved) html = html.replace(token, frag);
     root.innerHTML = html;
   }
-  function extractLabel(s){
-    let label = null;
-    s = s.replace(/\\label\{([^}]+)\}/, (m,id)=>{ label=id; return ''; });
-    return { s, label };
-  }
-  function parseWidth(opt){
-    if (!opt) return '';
-    const m = opt.match(/width\s*=\s*([0-9.]+)\\textwidth/i);
-    if (m) return (parseFloat(m[1]) * 100) + '%';
-    const p = opt.match(/width\s*=\s*([0-9.]+%)/i);
-    return p ? p[1] : '';
-  }
 
-  // ---------- wrap into section blocks ----------
-  function wrapSections(root){
-    const L = Math.max(1, Math.min(6, (window.SECTION_LEVEL||2)));
-    const hs = [...root.querySelectorAll(`h${L}`)];
-    if (hs.length === 0){
-      const w = document.createElement('div');
-      w.className = 'sec-block'; w.dataset.sec = '1';
-      while (root.firstChild) w.appendChild(root.firstChild);
-      root.appendChild(w);
-      log('No h'+L+' found; wrapped all as section 1');
-      return [w];
-    }
-    const wraps = [];
-    for (let i=0;i<hs.length;i++){
-      const h = hs[i];
-      // allow \label{sec:...} inside heading
-      const lab = h.innerHTML.match(/\\label\{([^}]+)\}/);
-      if (lab){ h.id = lab[1]; h.innerHTML = h.innerHTML.replace(lab[0],''); }
-      const w = document.createElement('div'); w.className='sec-block'; w.dataset.sec=String(i+1);
-
-      // pull nodes until next h{L}
-      let node = h;
-      while (node){
-        const next = node.nextSibling;
-        w.appendChild(node);
-        if (!next) break;
-        if (next.nodeType===1 && next.tagName.toLowerCase()===`h${L}`) break;
-        node = next;
-      }
-      root.insertBefore(w, w.firstChild);
-      wraps.push(w);
-    }
-    return wraps;
-  }
-
-  // ---------- core parsing ----------
-  const refMap = new Map(); // label -> {text,id}
-
-  function processSection(wrap, secNo){
-    // counters per section
-    const shared = {}; SHARED_GROUPS.forEach(g => shared[g.groupName]=0);
-    const solo = {}; SOLO_KINDS.forEach(k=> solo[k.name]=0);
-
-    const allKinds = [
-      ...SHARED_GROUPS.flatMap(g=>g.kinds),
-      ...SOLO_KINDS.map(k=>k.name)
-    ];
-
-    // Case-insensitive env names; allow whitespace
-    const envRe = new RegExp(
-      String.raw`\\begin\{\s*(${allKinds.join('|')})\s*\}(?:\[(.*?)\])?([\\s\\S]*?)\\end\{\\s*\\1\\s*\}`,
-      'gi'
-    );
-
-    let html = wrap.innerHTML;
-    html = html.replace(envRe, (full, kindRaw, optTitle, body) => {
-      const kind = String(kindRaw).toLowerCase();
-
-      let { s: inner, label } = extractLabel(body);
-      const sg = SHARED_GROUPS.find(g => g.kinds.includes(kind));
-      const sk = SOLO_KINDS.find(k => k.name === kind);
-
-      let isNumbered = true, numberString = '', titleText='Theorem';
-      if (sg){
-        shared[sg.groupName] += 1;
-        numberString = `${secNo}.${shared[sg.groupName]}`;
-        titleText   = sg.titleByKind[kind] || sg.defaultTitle || 'Theorem';
-      } else if (sk){
-        titleText = sk.title || 'Theorem';
-        if (sk.number === false){ isNumbered = false; }
-        else { solo[sk.name]+=1; numberString = `${secNo}.${solo[sk.name]}`; }
-      } else { // fallback
-        solo[kind] = (solo[kind]||0)+1;
-        numberString = `${secNo}.${solo[kind]}`;
-      }
-
-      if (kind==='proof' && (typeof ADD_QED==='undefined' || ADD_QED) && !/\\qedhere/.test(inner)) {
-        inner += ' \\qquad \\square';
-      }
-      const heading = isNumbered
-        ? `${titleText} ${numberString}${optTitle ? ' ('+optTitle+')' : ''}`
-        : `${titleText}.`;
-
-      if (label && isNumbered){
-        refMap.set(label, { text: `${titleText} ${numberString}`, id: label });
-      }
-      const idAttr = label ? ` id="${label}"` : '';
-      return `<section class="${kind}"${idAttr}>
-        <div class="thm-heading">${heading}</div>
-        ${inner.trim()}
-      </section>`;
-    });
-
-    // Figures (supports figure and figure*; case-insensitive)
-    const figRe = /\\begin\{\s*figure\*?\s*\}([\s\S]*?)\\end\{\s*figure\*?\s*\}/gi;
-    let figCount = 0;
-    html = html.replace(figRe, (full, body) => {
-      let { s: rest, label } = extractLabel(body);
-      let caption = '';
-      rest = rest.replace(/\\caption\{([^}]+)\}/i, (m,t)=>{ caption=t; return ''; });
-
-      let src='', cssW='';
-      rest = rest.replace(/\\includegraphics(?:\[(.*?)\])?\{([^}]+)\}/i, (m,opt,path)=>{
-        src = path; cssW = parseWidth(opt); return '';
-      });
-
-      figCount += 1;
-      const num = `${secNo}.${figCount}`;
-      const idAttr = label ? ` id="${label}"` : '';
-      if (label) refMap.set(label, { text: `${FIGURE_TITLE} ${num}`, id: label });
-
-      const style = cssW ? ` style="max-width:100%; width:${cssW}"` : ' style="max-width:100%;"';
-      return `<figure${idAttr}>
-        ${src ? `<imgc}` : ''}
-        <figcaption>${FIGURE_TITLE} ${num}: ${caption||''}</figcaption>
-      </figure>`;
-    });
-
-    wrap.innerHTML = html;
-  }
-
-  function rewriteTextRefs(root){
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const targets = [];
-    while (walker.nextNode()){
-      const s = walker.currentNode.nodeValue;
-      if (s && /\\ref\{[^}]+\}/.test(s)) targets.push(walker.currentNode);
-    }
-    targets.forEach(node => {
-      const span = document.createElement('span');
-      span.innerHTML = node.nodeValue.replace(/\\ref\{([^}]+)\}/g, (_, id) => {
-        if (refMap.has(id)){ const r = refMap.get(id); return `#${r.id}${r.text}</a>`; }
-        return `\\ref{${id}}`; // leave (likely equation or unresolved)
-      });
-      node.parentNode.replaceChild(span, node);
-    });
-  }
-
-  async function typesetPerSection(blocks){
-    if (!window.MathJax || !MathJax.typesetPromise){ log('MathJax not ready'); return; }
-    for (const w of blocks){
-      MathJax.config._currentSection = parseInt(w.dataset.sec, 10) || 0;
-      await MathJax.typesetPromise([w]);
-    }
-  }
-
-  // ---------- main ----------
   document.addEventListener('DOMContentLoaded', async () => {
-    try{
-      const root = contentRoot();
-      const saved = protectCode(root);
-
-      const blocks = wrapSections(root);
-      for (const w of blocks){
-        const secNo = parseInt(w.dataset.sec, 10) || 1;
-        processSection(w, secNo);
-      }
-
-      restoreCode(root, saved);
-
-      await typesetPerSection(blocks);
-      rewriteTextRefs(root);
-      log('Done.');
-    } catch (e){
-      console.error('[latex-math] error:', e);
-    }
+    const root = contentRoot();
+    const saved = protectCode(root);
+    const blocks = wrapSections(root);
+    blocks.forEach((block, i) => processSection(block, i + 1));
+    restoreCode(root, saved);
+    await typesetSections(blocks);
+    rewriteRefs(root);
   });
 })();
 </script>
 
 <style>
-/* Visuals (tweak to taste) */
 section.theorem, section.lemma, section.proposition, section.corollary,
 section.definition, section.remark, section.example, section.proof {
   border-left: 4px solid #4b8;
@@ -275,9 +226,9 @@ section.definition, section.remark, section.example, section.proof {
   padding: .75rem 1rem;
   margin: 1.25rem 0;
 }
-section.proof { border-color:#888; background:#fbfbfb; }
+section.proof { border-color: #888; background: #fbfbfb; }
 .thm-heading { font-weight: 600; margin-bottom: .35rem; }
-figure { text-align:center; margin: 1.5rem auto; }
-figure img { display:block; margin: 0 auto; }
+figure { text-align: center; margin: 1.5rem auto; }
+figure img { display: block; margin: 0 auto; }
 figcaption { font-style: italic; margin-top: .5rem; }
 </style>
