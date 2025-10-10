@@ -3,19 +3,25 @@
   <meta charset="utf-8">
   <title>{{ page.title }} | {{ site.title }}</title>
   <link rel="stylesheet" href="{{ site.github.url }}/assets/libs/bootstrap/bootstrap.min.css">
-  <script defer src="{{ site.github.url }}/assets/libs/fontawesome/all.min.js"></script>
+<!--  <script defer src="{{ site.github.url }}/assets/libs/fontawesome/all.min.js"></script>
   <link rel="stylesheet" href="{{ site.github.url }}/assets/css/main.css">
   <link rel="apple-touch-icon" sizes="152x152" href="{{ site.github.url }}/assets/apple-icon-152x152.png">
   <link rel="shortcut icon" href="{{ site.github.url }}/assets/favicon.ico">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
-<!-- MathJax v4 config + loader -->
+-->
+  <!-- MathJax v4: config FIRST -->
 <script>
   window.MathJax = {
     loader: { load: ['[tex]/tagformat'] },
     tex: {
       packages: { '[+]': ['tagformat'] },
+      // Turn on LaTeX-like auto numbering + \label \ref \eqref
       tags: 'ams',
+      // Enable $...$ inline math (MathJax doesn't do this by default)
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      // Customize equation tags as <section>.<n> once your footer script sets _currentSection
       tagformat: {
         number: (n) => (MathJax.config._currentSection || 0) + '.' + n,
         id: (tag) => 'eqn-' + tag
@@ -23,5 +29,6 @@
     }
   };
 </script>
-https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js
+<!-- Then the loader (one time only) -->
+https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js</script>
 </head>
