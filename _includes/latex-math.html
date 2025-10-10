@@ -63,7 +63,7 @@
       return [wrap];
     }
     const wraps = [];
- for (let i = 0; i < headings.length; i++) {
+for (let i = 0; i < headings.length; i++) {
   const h = headings[i];
   const lab = h.innerHTML.match(/\\label\{([^}]+)\}/);
   if (lab) {
@@ -73,6 +73,10 @@
   const wrap = document.createElement('div');
   wrap.className = 'sec-block';
   wrap.dataset.sec = String(i + 1);
+
+  // Insert wrap before moving nodes
+  root.insertBefore(wrap, h);
+
   let node = h;
   while (node) {
     const next = node.nextSibling;
@@ -81,7 +85,6 @@
     if (next.nodeType === 1 && next.tagName.toLowerCase() === `h${level}`) break;
     node = next;
   }
-  root.insertBefore(wrap, h);
   wraps.push(wrap);
 }
     return wraps;
