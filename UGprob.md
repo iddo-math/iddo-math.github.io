@@ -1,33 +1,36 @@
 ---
-title: "An Article with Custom Environments"
-layout: "UGprob"
+layout: default
+title: LaTeX-like Theorems & Figures (Section-based)
 ---
-{% comment %}
-  This is a block of Liquid code that will be commented out.
-  {% include some_file.html %}
-  {% assign my_variable = "some_value" %}
 
-Here's an important result in {% ref pythagoras %}. The proof is quite elegant.
+## Right Triangles
 
-{% thm "Pythagorean Theorem" label="pythagoras" %}
-In a right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides.
-{% endthm %}
+\begin{theorem}[Pythagoras]\label{thm:pyth}
+For a right triangle with legs $a,b$ and hypotenuse $c$,
+\begin{equation}\label{eq:py}
+a^2 + b^2 = c^2.
+\end{equation}
+\end{theorem}
 
-We can generalize this with the following lemma.
+As shown in Theorem~\ref{thm:pyth}, equation $\eqref{eq:py}$ holds.
 
-{% lem "Triangle Inequality" label="triangle_inequality" %}
-For any triangle, the sum of the lengths of any two sides is greater than the length of the remaining side.
-{% endlem %}
+\begin{figure}\label{fig:triangle}
+\includegraphics[width=0.6\textwidth]{/assets/img/triangle.png}
+\caption{A right triangle.}
+\end{figure}
 
-The formula is shown in {% eqref cosine_law %}.
+See Figure~\ref{fig:triangle}.
 
-{% eqn label="cosine_law" %}
-$$ c^2 = a^2 + b^2 - 2ab \cos(\gamma) $$
-{% endeqn %}
+\begin{lemma}\label{lem:leg}
+If $a=3$ and $b=4$, then $c=5$.
+\end{lemma}
 
-And now for an example related to the previous lemma.
+Theorem/Lemma share numbering: compare Theorem~\ref{thm:pyth} and Lemma~\ref{lem:leg}.
 
-{% xmpl "Application of the Triangle Inequality" %}
-Let's consider a triangle with side lengths $a=3$, $b=4$, and $c=5$. Since $3+4 > 5$, this is a valid triangle.
-{% endxmpl %}
-{% endcomment %}
+## Another Section
+
+\begin{proposition}\label{prop:next}
+This starts a new section; shared theorem counter resets, so this is Proposition 2.1.
+\end{proposition}
+
+Equation numbering also resets: $\begin{equation}\label{eq:next} x^2 - 1 = (x-1)(x+1) \end{equation}$
