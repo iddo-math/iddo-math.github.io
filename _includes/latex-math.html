@@ -74,8 +74,12 @@ for (let i = 0; i < headings.length; i++) {
   wrap.className = 'sec-block';
   wrap.dataset.sec = String(i + 1);
 
-  // Insert wrap before moving nodes
+  // Culprit!
+ if (h.parentNode === root) {
   root.insertBefore(wrap, h);
+} else {
+  root.appendChild(wrap);
+}
 
   let node = h;
   while (node) {
