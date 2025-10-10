@@ -81,7 +81,6 @@
     if (next.nodeType === 1 && next.tagName.toLowerCase() === `h${level}`) break;
     node = next;
   }
-  // FIX: Insert the wrapper before the heading in root
   root.insertBefore(wrap, h);
   wraps.push(wrap);
 }
