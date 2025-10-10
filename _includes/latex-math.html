@@ -16,10 +16,10 @@
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 
-<!-- Theorem/Figure Parser -->
+<!-- Theorem/Figure Parser (Patched for multiple sec-blocks and correct reference replacement) -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const SECTION_LEVEL = 2;
+  const SECTION_LEVEL = 2; // Adjust if you use different heading levels for sections
   const SHARED_GROUPS = [
     {
       groupName: 'thm',
@@ -50,12 +50,12 @@ document.addEventListener('DOMContentLoaded', function () {
     return p ? p[1] : '';
   }
 
+  // Only wrap if not already .sec-block (for backward compatibility)
   function alreadyWrapped(root) {
     return !!root.querySelector('.sec-block');
   }
 
   function wrapSections(root) {
-    // Prevent double-wrapping
     if (alreadyWrapped(root)) return Array.from(root.querySelectorAll('.sec-block'));
     const level = Math.max(1, Math.min(6, SECTION_LEVEL));
     const headings = [...root.querySelectorAll(`h${level}`)];
@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
       wrap.className = 'sec-block';
       wrap.dataset.sec = String(i + 1);
 
-      // Only insert if not already wrapped
       if (h.parentNode === root) {
         root.insertBefore(wrap, h);
       } else {
@@ -164,27 +163,41 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Reference replacement: \ref{label} --> Theorem 1.1, etc.
+  // Now works **outside** of sections/figures, for all .sec-blocks
   function replaceRefs(root) {
-    root.querySelectorAll('section,figure').forEach(el => {
-      el.innerHTML = el.innerHTML.replace(/\\ref\{([^}]+)\}/g, (_, label) => {
-        if (refMap.has(label)) {
-          const ref = refMap.get(label);
-          return `<a href="#${ref.id}" class="thm-ref">${ref.text}</a>`;
+    // Replace \ref{...} in all text nodes within root
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, null, false);
+    while (walker.nextNode()) {
+      const el = walker.currentNode;
+      // Only replace in elements without children (leaf nodes) or in "p"/"span"/"div" type elements
+      if (el.children.length === 0 || ['P','SPAN','DIV'].includes(el.tagName)) {
+        if (el.innerHTML && el.innerHTML.includes('\\ref{')) {
+          el.innerHTML = el.innerHTML.replace(/\\ref\{([^}]+)\}/g, (_, label) => {
+            if (refMap.has(label)) {
+              const ref = refMap.get(label);
+              return `<a href="#${ref.id}" class="thm-ref">${ref.text}</a>`;
+            }
+            return `<span class="thm-ref thm-missing">??</span>`;
+          });
         }
-        return `<span class="thm-ref thm-missing">??</span>`;
-      });
-    });
+      }
+    }
   }
 
   // --- MAIN EXECUTION ---
-  // 1. Wrap sections
-  const blocks = wrapSections(document.body);
-  // 2. Process each section and build refMap
-  blocks.forEach((block, i) => processSection(block, i + 1));
-  // 3. Replace references
-  replaceRefs(document.body);
+  // 1. Find all section blocks (already wrapped)
+  const secBlocks = Array.from(document.querySelectorAll('.sec-block'));
+  let sectionOffset = 0;
+  secBlocks.forEach((block, i) => {
+    // Here, i+1 is used as section number
+    processSection(block, i + 1);
+    sectionOffset++;
+  });
 
-  // 4. Re-typeset MathJax (v4) after DOM modifications
+  // 2. Replace references in all .sec-blocks
+  secBlocks.forEach(block => replaceRefs(block));
+
+  // 3. Re-typeset MathJax (v4) after DOM modifications
   if (window.MathJax && MathJax.typesetPromise) {
     MathJax.typesetPromise();
   }
