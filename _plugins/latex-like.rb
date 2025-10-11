@@ -10,9 +10,12 @@ module Jekyll
 
     def self.process(content)
       ENVIRONMENTS.each do |env|
-        # Match egin{env}[Title][label=...] ... \label{...} ... \end{env}
-        content.gsub!(/\begin\{#{env}\}(?:\[(.*?)\])?(?:\[label=(.*?)\])?(.*?)\end\{#{env}\}/m) do
-          title, label, body = $1, $2, $3.strip
+  # Regex: \begin{env}[title][label=...] (BODY) \end{env}
+  # Note the use of `\s*` for flexible whitespace and `.*?` for non-greedy body.
+  # The /m flag is crucial for multiline matches.
+  content.gsub!(/\\begin\{#{env}\}\s*(?:\[(.*?)\])?\s*(?:\[label=(.*?)\])?(.*?)\s*\\end\{#{env}\}/m) do
+    # ... your existing logic for $1, $2, $3 ...
+         title, label, body = $1, $2, $3.strip
 
           # Extract \label{...} inside body if not provided in optional argument
           body.gsub!(/\label\{(.*?)\}/) do
@@ -34,10 +37,10 @@ module Jekyll
               #{heading}. #{body}
             </div>
           HTML
-        end
-      end
-
-      # Replace 
+  end
+end
+    
+# Replace 
 ef{label} with stored reference
       content.gsub(/\ref\{(.*?)\}/) do
         @@labels[$1] || "??"
