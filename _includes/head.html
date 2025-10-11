@@ -10,14 +10,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-// MathJax 
-  <script>
-    window.MathJax = {
-      tex: {
-        tags: 'ams'
-      }
-    };
-    </script>
+<script>
+window.MathJax = {
+  tex: {
+    packages: ['base'], // don't include 'ams' if you want to restrict environments
+    tags: 'ams',
+    errorSettings: {
+      message: ['!'],
+      style: 'color: red'
+    }
+  }
+};
+</script>
 
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
