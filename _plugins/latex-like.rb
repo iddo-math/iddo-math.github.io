@@ -1,4 +1,4 @@
-# _plugins/latex_environments.rb
+# _plugins/latex_like.rb
 
 module Jekyll
   # Use a Generator to ensure the content modification runs at a high priority
