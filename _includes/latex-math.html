@@ -11,12 +11,19 @@
         number: (n) => (MathJax.config._currentSection || 0) + '.' + n,
         id: (tag) => 'eqn-' + tag
       }
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+    },
+    startup: {
+      // Prevent MathJax from auto-typesetting until we call it
+      ready: () => {}
     }
   };
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 
-<!-- Theorem/Figure Parser (Patched for multiple sec-blocks and correct reference replacement) -->
+<!-- Theorem/Figure Parser (patched for correct order and reference replacement) -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const SECTION_LEVEL = 2; // Adjust if you use different heading levels for sections
@@ -197,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 2. Replace references in all .sec-blocks
   secBlocks.forEach(block => replaceRefs(block));
 
-  // 3. Re-typeset MathJax (v4) after DOM modifications
+  // 3. Now call MathJax to typeset math (only now!)
   if (window.MathJax && MathJax.typesetPromise) {
     MathJax.typesetPromise();
   }
