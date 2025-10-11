@@ -11,22 +11,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <script>
-window.MathJax = {
-  tex: {
-    // tags: 'ams' enables automatic numbering for environments like \begin{equation}
-    tags: 'ams',
-    
-    // The ams package is needed for numbering but is loaded by default.
-    // If you explicitly list packages, you MUST include 'ams'.
-    // A safe way to add packages is to use the '[+]' syntax.
-    
-    errorSettings: {
-      message: ['!'],
-      style: 'color: red'
+  window.MathJax = {
+    // ... all your MathJax v3 configuration goes here ...
+    options: {
+      // The errorSettings configuration is now part of 'options' 
+      // and is often related to 'formatError' (which is correct/needed)
+      // but the exact structure is very different.
+    },
+    tex: {
+      // e.g. equation numbering config is here
+      tags: 'ams'
     }
-  }
-};
+  };
 </script>
-
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
