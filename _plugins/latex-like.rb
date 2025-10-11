@@ -28,6 +28,13 @@ module Jekyll
     end
 
     def process_environments(content)
+  # >>> TEMPORARY DIAGNOSTIC STEP <<<
+  # If you see content containing \\\\begin{theorem} (4 backslashes),
+  # then the Markdown processor ran first and is double-escaping!
+  puts "--- DEBUG: Raw Content Start ---"
+  puts content.slice(0, 500) # Print first 500 characters
+  puts "--- DEBUG: Raw Content End ---"
+  # >>> END DIAGNOSTIC STEP <<<
       ENVIRONMENTS.each do |env|
         
         # NOTE ON REGEX:
