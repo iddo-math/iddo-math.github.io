@@ -1,0 +1,38 @@
+name: Build and Deploy Jekyll with Custom Plugins
+
+# Trigger this workflow whenever a push is made to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering from the GitHub UI
+
+jobs:
+  jekyll:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby Environment
+        # This action sets up the necessary Ruby version (e.g., Ruby 3.2)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true # Installs dependencies from Gemfile
+
+      - name: Install Dependencies and Build Site
+        # Runs the build command, using all plugins defined in the Gemfile/plugins folder
+        run: bundle exec jekyll build
+
+      - name: Deploy to GitHub Pages
+        # This is a specialized action that pushes the contents of the _site folder 
+        # to the gh-pages branch, handling all git commands automatically.
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          # TOKEN is automatically provided by GitHub
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # The source directory to deploy (the Jekyll output)
+          publish_dir: ./_site
+          # The branch to push the final, built files to
+          publish_branch: gh-pages
