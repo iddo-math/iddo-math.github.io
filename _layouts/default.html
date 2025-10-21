@@ -2,11 +2,22 @@
 <html lang="{{ site.lang | default: "en-US" }}">
   {% include head.html %}
   <body>
+
+    <div class="header-fixed-container">
+      {% include header.html %} 
+    </div>
+
+    <div class="col-lg-10 mx-auto p-3 py-md-5 content-scrolling">
+      {{ content }}
+      {% include footer.html %}
+    </div>  
+    <!-- Old, non scrolling header
     <div class="col-lg-10 mx-auto p-3 py-md-5">
       {% include header.html %}
       {{ content }}
       {% include footer.html %}
     </div>
+  -->
   <script>
   window.addEventListener('load', function() {
     // Wait for a short moment to ensure MathJax has finished its initial run

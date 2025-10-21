@@ -12,3 +12,23 @@ body {
 body a {
   color: $linkColor
 }
+
+.header-fixed-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000; /* Ensure it stays above content */
+      background-color: white; /* Important for covering content */
+      
+      /* Replicate original wrapper's centering/padding */
+      width: 100%;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+    
+.content-scrolling {
+      /* Pushes the scrolling content down by the header's height */
+      /* You'll need to manually adjust this padding based on the header's final height */
+      padding-top: 100px !important; /* Example: adjust based on header height */
+   }
