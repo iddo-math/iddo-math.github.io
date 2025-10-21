@@ -3,7 +3,6 @@ layout: home
 title: "Home"
 ---
 
-
 <table>
 <colgroup>
  <col span="1" style="width: 70%;">
