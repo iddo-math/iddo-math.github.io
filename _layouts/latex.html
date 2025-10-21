@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  {% include head.html %}
+<body>
+{% include mathjax_custom.html %}
+{% include header.html %}
+<input type="checkbox" id="toc-toggle" hidden> 
+ <div class="page-container"> 
+<aside class="sidebar-toc" id="sidebar-toc">
+    <div class="toc-toolbar">
+      <label for="toc-toggle" class="toc-button" aria-label="Toggle table of contents">
+        &#9776;
+      </label>
+    </div>
+<nav class="toc-content" id="markdown-sidebar-toc">
+      <!-- Content will be pulled from Jekyll's own TOC. Don't put anthing here. -->
+    </nav>
+  </aside>
+<main class="main-content">
+    {{ content }}
+  </main>
+</div>
+<style>
+:root {
+  /* Adjust to taste */
+  --sidebar-w: 260px;       /* expanded sidebar width */
+  --toggle-size: 36px;      /* square toggle button size */
+  --rail-pad: 8px;          /* horizontal padding around the button */
+  --rail-w: calc(var(--toggle-size) + 2 * var(--rail-pad));  /* collapsed width */
+  --gap: 12px;              /* general spacing for toolbar */
+}
+
+/* Base two-column layout (independent scrolling) */
+.page-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;             /* scrollbars live inside the columns */
+}
+
+/* LEFT column: sidebar */
+.sidebar-toc {
+  position: sticky;             /* stays pinned to viewport top */
+  top: 0;
+  align-self: flex-start;
+  flex: 0 0 var(--sidebar-w);   /* fixed width when expanded */
+  width: var(--sidebar-w);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;             /* we'll scroll only .toc-content */
+  background: #f8f9fb;
+  border-right: 1px solid #e7eaf0;
+  transition:
+    flex-basis .25s ease,
+    width .25s ease;
+}
+
+/* Toolbar at top of sidebar; button lives here */
+.toc-toolbar {
+  position: sticky;             /* stays visible as .toc-content scrolls */
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: var(--gap);
+  border-bottom: 1px solid #e7eaf0;
+  background: inherit;          /* same background as sidebar */
+}
+
+/* The button is inside the left column and keeps the same position */
+.toc-button {
+  width: var(--toggle-size);
+  height: var(--toggle-size);
+  line-height: var(--toggle-size);
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+
+  /* optional cosmetics */
+  background: #fff;
+  border: 1px solid #d8dee8;
+  border-radius: 6px;
+  font-size: 20px;
+}
+
+/* Scroll only the TOC text, under the toolbar */
+.toc-content {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: var(--gap);
+}
+
+/* RIGHT column: main content */
+.main-content {
+  flex: 1 1 auto;
+  min-width: 0;                /* prevent overflow in flex layouts */
+  overflow: auto;
+  padding: 20px;
+  transition: padding-left .25s ease;
+}
+
+/* ------------------ Collapsed state ------------------ */
+/* Checkbox is outside; use sibling combinator to affect both columns */
+#toc-toggle:checked ~ .page-container .sidebar-toc {
+  /* Shrink left column to a narrow rail that holds only the button */
+  flex-basis: var(--rail-w);
+  width: var(--rail-w);
+  min-width: var(--rail-w);
+}
+
+/* Hide the text/content area below the toolbar */
+#toc-toggle:checked ~ .page-container .sidebar-toc .toc-content {
+  display: none;
+}
+
+/* Optional: tighten main content padding when collapsed */
+#toc-toggle:checked ~ .page-container .main-content {
+  padding-left: 20px;
+}
+
+/* -------------- Optional niceties -------------- */
+
+/* Ensure links in TOC don’t wrap under the button when expanded */
+.sidebar-toc .toc-content a {
+  text-decoration: none;
+  color: #1f3a5f;
+}
+.sidebar-toc .toc-content a:hover {
+  text-decoration: underline;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-toc,
+  .main-content {
+    transition: none;
+  }
+}
+
+/* --- LaTeX Environments Styling --- */
+.latex-env {
+    margin: 1.5em 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-left: 5px solid #0056b3; /* Nice blue accent for all environments */
+    border-radius: 4px;
+}
+
+
+/* Specific styling for Proofs (pf) */
+.latex-env.pf {
+    border-left-color: #5cb85c; /* Green accent for proofs */
+    background-color: #f9fff9;
+}
+
+/* Heading for the environment */
+.env-heading {
+    display: flex; /* Allows the button and heading text to be on one line */
+    align-items: center;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+/* QED Box style */
+.qed-box {
+    margin-left: 10px;
+    font-size: 1.2em;
+    line-height: 1; /* Ensures it aligns nicely with the last line of text */
+}
+
+/* --- Collapsible Styling (The Proof/pf environment) --- */
+/* The content is hidden by default in collapsible environments */
+.latex-env.collapsible .env-content {
+    /* Set max-height to 0 to hide it without display:none to allow transitions */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* Smooth collapse transition */
+    padding-top: 0; /* Remove top padding when collapsed */
+    opacity: 0;
+}
+
+/* When the environment is active (expanded) */
+.latex-env.collapsible.active .env-content {
+    max-height: 2000px; /* Needs to be larger than max possible content height */
+    padding-top: 10px; /* Add some space when expanded */
+    opacity: 1;
+}
+
+/* Toggle Button Styling */
+.collapse-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 0 10px 0 0;
+    color: #333;
+    line-height: 1;
+}
+
+.collapse-toggle .minus-icon {
+    display: none; 
+}
+
+/* 2. SHOW the minus icon when the parent environment has the 'active' class (expanded) */
+.latex-env.collapsible.active .collapse-toggle .minus-icon {
+    display: inline;
+}
+
+/* 3. HIDE the plus icon when the parent environment has the 'active' class (expanded) */
+.latex-env.collapsible.active .collapse-toggle .plus-icon {
+    display: none;
+}
+/* Note: The plus icon is visible by default because the minus icon is hidden by default. */
+</style>
+<!-- Copy the content of TOC (bottom of page) to the side bar -->
+ <script>
+        function cloneAndHideElement(originalId, targetId, newCloneId) {
+            // 1. Get the original element
+            const originalElement = document.getElementById(originalId);
+            
+            // 2. Get the target container
+            const targetContainer = document.getElementById(targetId);
+
+            if (!originalElement || !targetContainer) {
+                console.error("Original or Target element not found.");
+                return;
+            }
+
+            // 3. Create a DEEP clone (true means copy children too)
+            const clonedElement = originalElement.cloneNode(true);
+
+            // 4. Update the cloned element's ID to ensure uniqueness
+            // This is a crucial best practice for valid HTML
+            clonedElement.id = newCloneId; 
+
+            // 5. Append the clone to the new location
+            targetContainer.appendChild(clonedElement);
+
+            // 6. Hide the original element
+            originalElement.style.display = 'none';
+        }
+
+        // Execute the function:
+        // Clone element 'markdown-toc' 
+        // to container 'markdown-sidebar-toc' 
+        // and give the clone the new ID 'cloned-markdown-toc'
+        cloneAndHideElement('markdown-toc', 'markdown-sidebar-toc', 'cloned-markdown-toc');
+    </script>
+<!-- Collapsible proofs -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleButtons = document.querySelectorAll('.collapse-toggle');
+
+    // 1. Ensure all collapsible environments START collapsed
+    document.querySelectorAll('.latex-env.collapsible').forEach(env => {
+        // Remove 'active' class to ensure CSS hiding is applied initially.
+        env.classList.remove('active'); 
+        
+        // Update the button's ARIA state to reflect the collapsed state
+        const button = env.querySelector('.collapse-toggle');
+        if (button) {
+            button.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    // 2. Add click listeners
+    toggleButtons.forEach(button => {
+        // Find the parent environment container
+        const envContainer = button.closest('.latex-env');
+        
+        button.addEventListener('click', function() {
+            // Toggle the 'active' class on the container (CSS handles content/icon visibility)
+            envContainer.classList.toggle('active');
+
+            // Update aria-expanded attribute for accessibility
+            const isExpanded = envContainer.classList.contains('active');
+            this.setAttribute('aria-expanded', isExpanded);
+        });
+    });
+});
+</script>
+<!-- Some mathjax stuff -->
+<script>
+  window.addEventListener('load', function() {
+    // Wait for a short moment to ensure MathJax has finished its initial run
+    setTimeout(function() {
+      if (window.MathJax) {
+        console.log("Triggering MathJax typesetPromise to resolve cross-references.");
+        
+        // This is the CRITICAL line. It forces MathJax to re-scan the page,
+        // which resolves the collected labels against the references.
+        MathJax.typesetPromise(); 
+      }
+    }, 250); // A short delay (250ms) is often necessary for stability
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+/* --- LaTeX Environments Styling --- */
+.latex-env {
+    margin: 1.5em 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-left: 5px solid #0056b3; /* Nice blue accent for all environments */
+    border-radius: 4px;
+}
+
+/* Specific styling for Proofs (pf) */
+.latex-env.pf {
+    border-left-color: #5cb85c; /* Green accent for proofs */
+    background-color: #f9fff9;
+}
+
+/* Heading for the environment */
+.env-heading {
+    display: flex; /* Allows the button and heading text to be on one line */
+    align-items: center;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+/* QED Box style */
+.qed-box {
+    margin-left: 10px;
+    font-size: 1.2em;
+    line-height: 1; /* Ensures it aligns nicely with the last line of text */
+}
+
+/* --- Collapsible Styling (The Proof/pf environment) --- */
+
+/* The content is hidden by default in collapsible environments */
+.latex-env.collapsible .env-content {
+    /* Set max-height to 0 to hide it without display:none to allow transitions */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* Smooth collapse transition */
+    padding-top: 0; /* Remove top padding when collapsed */
+    opacity: 0;
+}
+
+/* When the environment is active (expanded) */
+.latex-env.collapsible.active .env-content {
+    max-height: 2000px; /* Needs to be larger than max possible content height */
+    padding-top: 10px; /* Add some space when expanded */
+    opacity: 1;
+}
+
+/* Toggle Button Styling */
+.collapse-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 0 10px 0 0;
+    color: #333;
+    line-height: 1;
+}
+
+
+.latex-env.theorem {
+    /* Layout */
+    margin: 25px 0;
+    padding: 15px 20px;
+    border-radius: 8px; /* More rounded */
+    
+    /* Background and Shadow */
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Soft drop shadow */
+    border-top: 3px solid #66bb6a; /* A thin, friendly green accent line on top */
+    /* border: none; /* No side borders */
+}
+
+.latex-env.theorem strong {
+    /* Styling the heading */
+    font-size: 1.05em;
+    font-style: italic; /* Emphasize the theorem name */
+    color: #333; /* Use standard text color */
+    margin-bottom: 10px;
+    display: inline; /* Keep it on the same line if possible */
+}
+
+/* Add a line break after the heading text */
+.latex-env.theorem strong::after {
+    content: ""; 
+    display: block; 
+    margin-top: 5px;
+}
+

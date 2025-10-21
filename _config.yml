@@ -3,3 +3,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 title: "Iddo's Website" # the name of your site, e.g. ACME Corp.
 description: ""
 
+# Every header gets a nice prefix
+auto_id_prefix: "sec:"
+
+

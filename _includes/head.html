@@ -9,18 +9,29 @@
   <link rel="shortcut icon" href="{{ site.github.url }}/assets/favicon.ico">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
-
 <script>
-  window.MathJax = {
-    // ... all your MathJax v3 configuration goes here ...
-    options: {
-      // The errorSettings configuration is now part of 'options' 
-      // and is often related to 'formatError' (which is correct/needed)
-      // but the exact structure is very different.
-    },
+ MathJax = {
+    loader: {load: ['input/tex-base','[tex]/ams','[tex]/newcommand','[tex]/configmacros']},
     tex: {
-      // e.g. equation numbering config is here
-      tags: 'ams'
+      // CRITICAL: Load the empheq package, along with the standard ams package
+      packages: {'[+]': ['ams','base', 'newcommand', 'configmacros']},
+      // OPTIONAL BUT RECOMMENDED: Enables AMS-style equation numbering (1.1, 1.2, etc.)
+      // If you don't want automatic numbering, you can set this to 'none'.
+      tags: 'ams' ,
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    // RENDERER: Use the modern CHTML renderer for better performance and CSS styling
+    chtml: {
+      displayAlign: 'left', // Aligns displayed math to the left (common in modern texts)
+      displayIndent: '0em'
+    },
+    // OTHER CONFIGURATIONS
+    options: {
+      // This tells MathJax to ignore content inside the custom DIVs created by your plugin
+      // If your plugin's environments are not protected, you may need a more explicit ignore.
+      ignoreHtmlClass: 'tex2jax_ignore',
+      processHtmlClass: 'tex2jax_process'
     }
   };
 </script>
