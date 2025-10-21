@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
-  {% include head.html %}
+  {% include head.html %} 
 <body>
 {% include mathjax_custom.html %}
-{% include header.html %}
+{% include header.html %}  <div class="col-lg-10 mx-auto p-3 py-md-5">
 <input type="checkbox" id="toc-toggle" hidden> 
  <div class="page-container"> 
 <aside class="sidebar-toc" id="sidebar-toc">
@@ -19,7 +19,7 @@
 <main class="main-content">
     {{ content }}
   </main>
-</div>
+</div></div>
 <style>
 :root {
   /* Adjust to taste */
@@ -34,8 +34,8 @@
 .page-container {
   display: flex;
   flex-direction: row;
-  height: 100vh;
-  overflow: hidden;             /* scrollbars live inside the columns */
+  /*height: 100vh; */
+  overflow-x: hidden;             /* scrollbars live inside the columns */
 }
 
 /* LEFT column: sidebar */
@@ -45,10 +45,10 @@
   align-self: flex-start;
   flex: 0 0 var(--sidebar-w);   /* fixed width when expanded */
   width: var(--sidebar-w);
-  height: 100vh;
+ /*  height: 100vh; */
   display: flex;
   flex-direction: column;
-  overflow: hidden;             /* we'll scroll only .toc-content */
+  overflow-x: hidden;             /* we'll scroll only .toc-content */
   background: #f8f9fb;
   border-right: 1px solid #e7eaf0;
   transition:
