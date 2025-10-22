@@ -2,25 +2,32 @@
 <html lang="{{ site.lang | default: "en-US" }}">
   {% include head.html %} 
 <body>
-<div class="col-lg-10 mx-auto p-3 py-md-5">
-{% include mathjax_custom.html %}
-{% include header.html %}  
-<input type="checkbox" id="toc-toggle" hidden> 
- <div class="page-container"> 
-<aside class="sidebar-toc" id="sidebar-toc">
-    <div class="toc-toolbar">
-      <label for="toc-toggle" class="toc-button" aria-label="Toggle table of contents">
-        &#9776;
-      </label>
+
+  <div class="header-container"> 
+    <div class="col-lg-10 mx-auto">
+      {% include mathjax_custom.html %}
+      {% include header.html %} 
     </div>
-<nav class="toc-content" id="markdown-sidebar-toc">
-      <!-- Content will be pulled from Jekyll's own TOC. Don't put anthing here. -->
-    </nav>
-  </aside>
-<main class="main-content">
-    {{ content }}
-  </main>
-</div></div>
+  </div>
+
+  <div class="main-body-wrapper col-lg-10 mx-auto"> 
+    <input type="checkbox" id="toc-toggle" hidden> 
+    <div class="page-container"> 
+      <aside class="sidebar-toc" id="sidebar-toc">
+          <div class="toc-toolbar">
+            <label for="toc-toggle" class="toc-button" aria-label="Toggle table of contents">
+              &#9776;
+            </label>
+          </div>
+          <nav class="toc-content" id="markdown-sidebar-toc">
+            </nav>
+      </aside>
+      <main class="main-content">
+        {{ content }}
+      </main>
+    </div>
+  </div>
+
 <style>
 :root {
   /* Adjust to taste */
@@ -31,22 +38,55 @@
   --gap: 12px;              /* general spacing for toolbar */
 }
 
+/* New */ 
+html, body {
+  /* Set body to full height of viewport and remove default margins */
+  height: 100%; 
+  margin: 0;
+  padding: 0;
+  /* Hides overall window scrollbar */
+  overflow: hidden; 
+}
+
+/* New - Margin reset for gap fix */
+.header-container, 
+.header-container .col-lg-10 {
+  margin: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* New - Margin reset for header content */
+.header-container * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.header-container {
+  /* Ensure the header only takes up the necessary space */
+  flex-shrink: 0; 
+}
+
+.main-body-wrapper {
+  /* CRITICAL: The value here MUST be the EXACT computed height of your header-container */
+  /* If you found the issue, you should use your corrected value here (e.g., 60px) */
+  height: calc(100vh - 120px); 
+}
+
 /* Base two-column layout (independent scrolling) */
 .page-container {
   display: flex;
   flex-direction: row;
-  /*height: 100vh; */
+  height: 100%;
   overflow: hidden;             /* scrollbars live inside the columns */
 }
 
 /* LEFT column: sidebar */
 .sidebar-toc {
-  position: sticky;             /* stays pinned to viewport top */
-  top: 0;
   align-self: flex-start;
   flex: 0 0 var(--sidebar-w);   /* fixed width when expanded */
   width: var(--sidebar-w);
- /*  height: 100vh; */
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;             /* we'll scroll only .toc-content */
@@ -66,6 +106,10 @@
   align-items: center;
   gap: var(--gap);
   padding: var(--gap);
+
+  margin-bottom: 0; 
+  padding-bottom: var(--gap); 
+
   border-bottom: 1px solid #e7eaf0;
   background: inherit;          /* same background as sidebar */
 }
@@ -90,7 +134,18 @@
 .toc-content {
   flex: 1 1 auto;
   overflow: auto;
-  padding: var(--gap);
+  /* Ensures proper content padding */
+  padding-top: var(--gap);
+  padding-left: var(--gap);
+  padding-right: var(--gap);
+  
+  /* Buffer to ensure the last item is visible when scrolling down */
+  padding-bottom: calc(var(--gap) * 5); 
+}
+
+/* New - Ensures the last list item is fully visible at the bottom of the scroll */
+.toc-content li:last-child {
+  margin-bottom: calc(var(--gap) * 2); 
 }
 
 /* RIGHT column: main content */
@@ -100,6 +155,7 @@
   overflow: auto;
   padding: 20px;
   transition: padding-left .25s ease;
+  height: 100%;
 }
 
 /* ------------------ Collapsed state ------------------ */
@@ -149,7 +205,6 @@
     border-radius: 4px;
 }
 
-
 /* Specific styling for Proofs (pf) */
 .latex-env.pf {
     border-left-color: #5cb85c; /* Green accent for proofs */
@@ -169,7 +224,7 @@
 .qed-box {
     margin-left: 10px;
     font-size: 1.2em;
-    line-height: 1; /* Ensures it aligns nicely with the last line of text */
+    line-height: 1; 
 }
 
 /* --- Collapsible Styling (The Proof/pf environment) --- */
@@ -215,15 +270,10 @@
 .latex-env.collapsible.active .collapse-toggle .plus-icon {
     display: none;
 }
-/* Note: The plus icon is visible by default because the minus icon is hidden by default. */
 </style>
-<!-- Copy the content of TOC (bottom of page) to the side bar -->
- <script>
+<script>
         function cloneAndHideElement(originalId, targetId, newCloneId) {
-            // 1. Get the original element
             const originalElement = document.getElementById(originalId);
-            
-            // 2. Get the target container
             const targetContainer = document.getElementById(targetId);
 
             if (!originalElement || !targetContainer) {
@@ -231,27 +281,14 @@
                 return;
             }
 
-            // 3. Create a DEEP clone (true means copy children too)
             const clonedElement = originalElement.cloneNode(true);
-
-            // 4. Update the cloned element's ID to ensure uniqueness
-            // This is a crucial best practice for valid HTML
             clonedElement.id = newCloneId; 
-
-            // 5. Append the clone to the new location
             targetContainer.appendChild(clonedElement);
-
-            // 6. Hide the original element
             originalElement.style.display = 'none';
         }
 
-        // Execute the function:
-        // Clone element 'markdown-toc' 
-        // to container 'markdown-sidebar-toc' 
-        // and give the clone the new ID 'cloned-markdown-toc'
         cloneAndHideElement('markdown-toc', 'markdown-sidebar-toc', 'cloned-markdown-toc');
     </script>
-<!-- Collapsible proofs -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const toggleButtons = document.querySelectorAll('.collapse-toggle');
@@ -284,19 +321,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-<!-- Some mathjax stuff -->
 <script>
   window.addEventListener('load', function() {
-    // Wait for a short moment to ensure MathJax has finished its initial run
     setTimeout(function() {
       if (window.MathJax) {
         console.log("Triggering MathJax typesetPromise to resolve cross-references.");
-        
-        // This is the CRITICAL line. It forces MathJax to re-scan the page,
-        // which resolves the collected labels against the references.
         MathJax.typesetPromise(); 
       }
-    }, 250); // A short delay (250ms) is often necessary for stability
+    }, 250); 
   });
 </script>
 </body>
