@@ -6,7 +6,7 @@
   <div class="header-container"> 
     <div class="col-lg-10 mx-auto">
       {% include mathjax_custom.html %}
-      {% include header.html %} 
+      {% include latex_header.html %} 
     </div>
   </div>
 
@@ -70,7 +70,7 @@ html, body {
 .main-body-wrapper {
   /* CRITICAL: The value here MUST be the EXACT computed height of your header-container */
   /* If you found the issue, you should use your corrected value here (e.g., 60px) */
-  height: calc(100vh - 120px); 
+  height: calc(100vh - 200px); 
 }
 
 /* Base two-column layout (independent scrolling) */

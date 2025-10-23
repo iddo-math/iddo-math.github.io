@@ -1,0 +1,30 @@
+<header class="d-flex flex-column pb-3 mb-5 border-bottom">
+    {% assign target_dir = page.dir %}
+    {% assign index_page = site.pages | where_exp: "item", "item.dir == target_dir and item.name == 'index.md'" | first %}
+
+    {% comment %} === FIRST LINE: Site Title, Index Link, and Main Navigation === {% endcomment %}
+    <div class="d-flex flex-wrap align-items-center">
+        
+        <div class="d-flex align-items-center me-auto">
+            <a href="{{ site.github.url }}/" class="text-decoration-none me-2">
+                <span class="fs-4 fw-bold">{{ site.title }}</span>
+            </a>
+            <span class="fs-4 fw-bold mx-2">|</span>
+            <a href="{{ index_page.url | relative_url }}" class="text-decoration-none">
+                <span class="fs-4 fw-bold">{{ index_page.title | default: "Index Page" }}</span>
+            </a>
+        </div>
+
+        <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+            {% for item in site.data.settings.menu %}
+              <a class="me-3 py-2 text-decoration-none" href="{{ site.github.url }}{{ item.url }}">{{ item.name }}</a>
+            {% endfor %}
+        </nav>
+        
+    </div>
+    
+    {% comment %} === SECOND LINE: Current Page Title === {% endcomment %}
+    <div class="current-page-title pt-2">
+        <h1 class="h3 mb-0">{{ page.title }}</h1>
+    </div>
+</header>
