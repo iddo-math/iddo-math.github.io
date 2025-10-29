@@ -10,30 +10,38 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 <script>
- MathJax = {
-    loader: {load: ['input/tex-base','[tex]/ams','[tex]/newcommand','[tex]/configmacros']},
-    tex: {
-      // CRITICAL: Load the empheq package, along with the standard ams package
-      packages: {'[+]': ['ams','base', 'newcommand', 'configmacros']},
-      // OPTIONAL BUT RECOMMENDED: Enables AMS-style equation numbering (1.1, 1.2, etc.)
-      // If you don't want automatic numbering, you can set this to 'none'.
-      tags: 'ams' ,
-      inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [['$$', '$$'], ['\\[', '\\]']]
-    },
-    // RENDERER: Use the modern CHTML renderer for better performance and CSS styling
-    chtml: {
-      displayAlign: 'left', // Aligns displayed math to the left (common in modern texts)
-      displayIndent: '0em'
-    },
-    // OTHER CONFIGURATIONS
-    options: {
-      // This tells MathJax to ignore content inside the custom DIVs created by your plugin
-      // If your plugin's environments are not protected, you may need a more explicit ignore.
-      ignoreHtmlClass: 'tex2jax_ignore',
-      processHtmlClass: 'tex2jax_process'
+window.MathJax = {
+  // CRITICAL FIX: The top-level blocks must be siblings, not nested
+  tex: {
+    // Redundant packages kept for clarity, but not strictly needed for standard components
+    loader: {load: ['a11y/assistive-mml']},
+    packages: {'[+]': ['ams','base', 'newcommand', 'configMacros', 'html']}, 
+    tags: 'ams',
+    inlineMath: [ ['@@@', '@@@'],["$","$"]],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    macros: { 
+      // FIX: All backslashes are properly double-escaped
+      R: "\\\mathbb{R}",
+      N: "\\\mathbb{N}",
+      cal: "\\\mathcal"
     }
-  };
+  }, 
+  chtml: {
+    displayAlign: 'center',
+    displayIndent: '0em'
+  },
+  
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process',
+    skipHtmlTags: ['script','noscript','style','textarea','pre','code'],
+    enableMenu: true,
+    menuSettings: {
+      semantics: true
+    }
+  }
+};
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>

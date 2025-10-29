@@ -11,7 +11,7 @@ For current course content visit the respective [HuskyCT](https://huskyct.uconn.
 - I did not thoroughly review any of the following, so be aware of errors! I'll be grateful for feedback. 
 
 #### Undergraduate Probability  #### 
-- A nearly complete [textbook in undergraduate probability](https://iddo.uconn.edu/w/UG). I developed a WikiMedia-based environment to create it. 
+- A nearly complete [textbook in undergraduate probability](/UGProb/index.html). I developed a WikiMedia-based environment to create it. 
 
 #### Graduate Probability  #### 
 - [Lecture notes and assignments from Fall 2023.](/courses/MATH5160%20Notes.pdf)

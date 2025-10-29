@@ -5,7 +5,7 @@ layout: latex
 
 Welcome to my online Undergraduate probability textbook! 
 
-I'm still working on converting the book from its old form, so right now **there's very little and there are issues with math rendering**. 
+I'm still working on converting the book from its old form  **and I'm still testing it**. Images are missing, some links point to the wrong place, and there are additioal issues, but nearly all content is there.  
 
 {% comment %} 
     1. CRITICAL: Use the 'page.dir' variable to get the current file's directory path (e.g., '/probability/').

@@ -19,7 +19,7 @@ title: "Home"
 - I'm usually looking for both grad and undergrad students for research work. See past projects on both my students and the [Markov Chains REU](https://markov-chains-reu.math.uconn.edu/) pages.
 - My [courses](/courses) page has content from some of my recent courses.
 
-Here for advising? Email me.
+Here for advising? Email me. 
 </div>
 
 </td>
