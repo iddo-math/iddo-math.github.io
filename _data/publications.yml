@@ -1,4 +1,5 @@
 index:
+
   - {author: "I.B., Iddo Ben-Ari, Elcio Lebensztayn, Lucas Sousa Santos", title: "On quasi-stationary distributions for stochastic rumor models", year: "2026", journal: "submitted", arxiv: "2511.23390"}
   - {author: "I.B., Ningwei Jiang", title: "Representation and Characterization of Quasistationary Distributions for Markov Chains", year: "2026", journal: "Probability Surveys", volume: "23", number: "", pages: "181-254", arxiv: "2402.11154", url: "dx.doi.org/10.1214/26-PS36"}
   - {author: "I.B., Rinaldo Schinazi", title: "Can a single migrant per generation rescue a dying population?", year: "", journal: "Advances in Applied Mathematics", volume: "", number: "", pages: "", arxiv: "2304.06478", url: ""}
