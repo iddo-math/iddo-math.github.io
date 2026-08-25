@@ -1,4 +1,5 @@
 index:
+- { title: "Simulation of Maximal Couplings for Finite State Markov Chains", url: "/publications/presentations/Maximal_Coupling.pdf", description: "talk at Coin Flippers, U of Delaware (July 2026)"}
 - { title: "Characterization of Quasistationary Distributions", url: "/publications/presentations/RossFest70.pdf", description: "talk at RossFest70, Saint Louis University (May 2025)"}
 - { title: "Characterization of Quasi-stationary Distributions", url: "/publications/presentations/QSD_SPA23.pdf", description: "poster at Stochastic Processes and their Applications, Lisbon (July 2023)
 "}
