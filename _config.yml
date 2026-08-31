@@ -6,6 +6,9 @@ description: ""
 # Every header gets a nice prefix
 auto_id_prefix: "sec:"
 
+include:
+  - assets/lln_clt_applet
+
 
 
 
