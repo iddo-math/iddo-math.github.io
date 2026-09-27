@@ -8,6 +8,7 @@ auto_id_prefix: "sec:"
 
 include:
   - assets/lln_clt_applet
+  - assets/distributions.html
 
 
 
