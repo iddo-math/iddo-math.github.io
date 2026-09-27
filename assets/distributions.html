@@ -239,7 +239,7 @@
             {
                 name: "Standard Normal",
                 notation: "$Z \\sim \\mathcal{N}(0, 1)$",
-                origin: "The normal distribution centered at 0 with standard deviation 1. Used for Z-scores.",
+                origin: "CLT.",
                 pdf: "$$\\frac{1}{\\sqrt{2\\pi}} e^{-\\frac{1}{2}z^2}$$ $$,~ z \\in \\mathbb{R}$$",
                 mean: "$0$",
                 variance: "$1$"
@@ -247,7 +247,7 @@
             {
                 name: "Normal (Gaussian)",
                 notation: "$X \\sim \\mathcal{N}(\\mu, \\sigma^2)$<br>$\\mu\\in{\\mathbb R},~\\sigma^2>0$",
-                origin: "Sums of many independent random variables (Central Limit Theorem).",
+                origin: "CLT/Approximates sum of many independent random variables.",
                 pdf: "$$\\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}$$ $$,~ x \\in \\mathbb{R}$$",
                 mean: "$\\mu$",
                 variance: "$\\sigma^2$"
@@ -255,7 +255,7 @@
             {
                 name: "Chi-Squared",
                 notation: "$X \\sim \\chi^2(k)$<br>$k>0$",
-                origin: "Sum of squares of $k$ independent standard normal variables. Used for goodness-of-fit.",
+                origin: "Sum of squares of $k$ independent standard normal variables. Estimating variance of normal population.",
                 pdf: "$$\\frac{1}{2^{k/2}\\Gamma(k/2)} x^{k/2 - 1} e^{-x/2}$$ $$,~ x > 0$$",
                 mean: "$k$",
                 variance: "$2k$"
@@ -263,7 +263,7 @@
             {
                 name: "Student's t",
                 notation: "$X \\sim t(\\nu)$<br>$\\nu>0$",
-                origin: "Estimating the mean of a normally distributed population with small sample sizes.",
+                origin: "Estimating mean of normally distributed population.",
                 pdf: "$$\\frac{\\Gamma(\\frac{\\nu+1}{2})}{\\sqrt{\\nu\\pi}\\,\\Gamma(\\frac{\\nu}{2})} \\left(1 + \\frac{x^2}{\\nu} \\right)^{-\\frac{\\nu+1}{2}}$$ $$,~ x \\in \\mathbb{R}$$",
                 mean: "$0 \\; (\\nu > 1)$",
                 variance: "$\\frac{\\nu}{\\nu-2} \\; (\\nu > 2)$"
@@ -271,7 +271,7 @@
             {
                 name: "Fisher F",
                 notation: "$X \\sim F(d_1, d_2)$<br>$d_1,d_2>0$",
-                origin: "Ratio of two scaled chi-squared distributions. Common in ANOVA.",
+                origin: "Ratio of two scaled chi-squared distributions. ",
                 pdf: "$$\\frac{\\sqrt{\\frac{(d_1 x)^{d_1} d_2^{d_2}}{(d_1 x + d_2)^{d_1+d_2}}}}{x \\, B(\\frac{d_1}{2}, \\frac{d_2}{2})}$$ $$,~ x > 0$$",
                 mean: "$\\frac{d_2}{d_2-2} \\; (d_2 > 2)$",
                 variance: "$\\frac{2d_2^2(d_1+d_2-2)}{d_1(d_2-2)^2(d_2-4)} \\; (d_2 > 4)$"
