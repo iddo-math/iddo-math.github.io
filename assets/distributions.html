@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistical Reference & Calculator</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            750: '#293548',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- KaTeX for Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <!-- jStat & Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/jstat@1.9.6/dist/jstat.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .katex-display {
+            margin: 0.5em 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .print-break { page-break-before: always; }
+            .shadow-sm, .shadow-md { box-shadow: none !important; }
+            canvas { max-width: 100% !important; height: auto !important; }
+        }
+
+        /* Custom scrollbar for tables */
+        .table-container::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .table-container::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+        .table-container::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+        .dark .table-container::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+        }
+        .dark .table-container::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-200">
+
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+                Iddo & Gemini StatRefCalc ProPro
+            </h1>
+            <div class="flex items-center space-x-4">
+                <button onclick="window.print()" class="text-sm font-medium px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 rounded-lg transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    Print Reference
+                </button>
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 transition-colors">
+                    <!-- Sun Icon (Hidden in Light Mode) -->
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <!-- Moon Icon (Hidden in Dark Mode) -->
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <section class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 no-print">
+            <div class="mb-6 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <h2 class="text-2xl font-bold">Critical Value Calculator</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Calculate critical values and visualize rejection regions for hypothesis testing.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- Controls -->
+                <div class="space-y-5 lg:col-span-1">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Distribution</label>
+                        <select id="dist-select" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="normal">Normal (μ, σ²)</option>
+                            <option value="t">Student's t (ν)</option>
+                            <option value="chisquare">Chi-Squared (k)</option>
+                            <option value="f">Fisher F (d₁, d₂)</option>
+                        </select>
+                    </div>
+
+                    <div id="dynamic-inputs" class="space-y-4">
+                        <!-- Injected via JS -->
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Tail Type</label>
+                        <select id="tail-select" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="two">Two-Tailed (α/2)</option>
+                            <option value="right">Right-Tailed (Upper)</option>
+                            <option value="left">Left-Tailed (Lower)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Significance Level (α)</label>
+                        <input type="number" id="alpha-input" value="0.05" step="0.01" min="0.0001" max="0.9999" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+
+                    <button id="calculate-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition-colors shadow-sm">
+                        Calculate & Plot
+                    </button>
+
+                    <div class="mt-4 p-4 bg-slate-50 dark:bg-slate-750 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">Result</p>
+                        <div id="calc-result" class="text-xl font-bold text-slate-800 dark:text-slate-100">
+                            Ready...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart -->
+                <div class="lg:col-span-2 relative w-full h-[400px] flex items-center justify-center bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+                    <canvas id="distChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="print-break bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="p-6 border-b border-slate-200 dark:border-slate-700">
+                <h2 class="text-2xl font-bold">Statistical Distributions Reference</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Comprehensive list of common discrete and continuous probability distributions.</p>
+            </div>
+
+            <div class="overflow-x-auto table-container">
+                <table class="w-full text-left border-collapse min-w-[900px]">
+                    <thead>
+                        <tr class="bg-slate-100 dark:bg-slate-900 border-b-2 border-slate-200 dark:border-slate-700 text-sm uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                            <th class="p-4 font-semibold w-1/5">Distribution<br> Notation<br> Parameters</th>
+                            <th class="p-4 font-semibold w-1/4">Meaning</th>
+                            <th class="p-4 font-semibold w-auto">PMF / Density & Support</th>
+                            <th class="p-4 font-semibold w-[8%] text-center border-l border-slate-200 dark:border-slate-700">Mean $\mathbb{E}[X]$</th>
+                            <th class="p-4 font-semibold w-[8%] text-center border-l border-slate-200 dark:border-slate-700">Variance $\text{Var}(X)$</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // 1. Data Definitions for 14 Distributions (Backslashes escaped properly)
+        const DISTRIBUTIONS = [
+            {
+                name: "Bernoulli",
+                notation: "$X \\sim \\text{Bern}(p)$<br>$p\\in (0,1)$",
+                origin: "Models a single trial with exactly two possible outcomes (success/failure).",
+                pdf: "$$ p^x(1-p)^{1-x}$$ $$,~ x \\in \\{0, 1\\}$$",
+                mean: "$p$",
+                variance: "$p(1-p)$"
+            },
+            {
+                name: "Binomial",
+                notation: "$X \\sim \\text{Bin}(n, p)$<br>$n\\in\\{1,2,\\dots\\},p\\in (0,1)$",
+                origin: "Number of successes in $n$ independent Bernoulli trials.",
+                pdf: "$$ \\binom{n}{k} p^k (1-p)^{n-k}$$ $$,~ k \\in \\{0, 1, \\dots, n\\}$$",
+                mean: "$np$",
+                variance: "$np(1-p)$"
+            },
+            {
+                name: "Poisson",
+                notation: "$X \\sim \\text{Pois}(\\lambda)$<br>$\\lambda >0$",
+                origin: "Number of events occurring in a fixed interval of time or space.",
+                pdf: "$$ \\frac{\\lambda^k e^{-\\lambda}}{k!}$$ $$,~ k \\in \\{0, 1, 2, \\dots\\}$$",
+                mean: "$\\lambda$",
+                variance: "$\\lambda$"
+            },
+            {
+                name: "Geometric",
+                notation: "$X \\sim \\text{Geo}(p)$<br>$p\\in (0,1)$",
+                origin: "Number of trials needed to get the first success in repeated Bernoulli trials.",
+                pdf: "$$ (1-p)^{k-1}p$$ $$,~ k \\in \\{1, 2, 3, \\dots\\}$$",
+                mean: "$\\frac{1}{p}$",
+                variance: "$\\frac{1-p}{p^2}$"
+            },
+            {
+                name: "Negative Binomial",
+                notation: "$X \\sim \\text{NB}(r, p)$<br>$r\\in \\{1,2,\\dots\\},~p\\in (0,1)$",
+                origin: "Number of trials needed to get the $r$-th success.",
+                pdf: "$$\\binom{k-1}{r-1} p^r (1-p)^{k-r}$$ $$,~ k \\in \\{r, r+1, \\dots\\}$$",
+                mean: "$\\frac{r}{p}$",
+                variance: "$\\frac{r(1-p)}{p^2}$"
+            },
+            {
+                name: "Hypergeometric",
+                notation: "$X \\sim \\text{HGeom}(N, K, n)$<br>$N\\in\\{1,2,\\dots\\},K\\in\\{0,1,\\dots,N\\},n\\in\\{1,2,\\dots\\}$",
+                origin: "Number of successes in $n$ draws without replacement from a finite population of size $N$ containing $K$ total successes.",
+                pdf: "$$\\frac{\\binom{K}{k} \\binom{N-K}{n-k}}{\\binom{N}{n}}$$ $$,~ k \\in \\{0, \\dots, n\\}$$",
+                mean: "$n\\frac{K}{N}$",
+                variance: "$n\\frac{K}{N}\\frac{N-K}{N}\\frac{N-n}{N-1}$"
+            },
+            {
+                name: "Standard Normal",
+                notation: "$Z \\sim \\mathcal{N}(0, 1)$",
+                origin: "The normal distribution centered at 0 with standard deviation 1. Used for Z-scores.",
+                pdf: "$$\\frac{1}{\\sqrt{2\\pi}} e^{-\\frac{1}{2}z^2}$$ $$,~ z \\in \\mathbb{R}$$",
+                mean: "$0$",
+                variance: "$1$"
+            },
+            {
+                name: "Normal (Gaussian)",
+                notation: "$X \\sim \\mathcal{N}(\\mu, \\sigma^2)$<br>$\\mu\\in{\\mathbb R},~\\sigma^2>0$",
+                origin: "Sums of many independent random variables (Central Limit Theorem).",
+                pdf: "$$\\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}$$ $$,~ x \\in \\mathbb{R}$$",
+                mean: "$\\mu$",
+                variance: "$\\sigma^2$"
+            },
+            {
+                name: "Chi-Squared",
+                notation: "$X \\sim \\chi^2(k)$<br>$k>0$",
+                origin: "Sum of squares of $k$ independent standard normal variables. Used for goodness-of-fit.",
+                pdf: "$$\\frac{1}{2^{k/2}\\Gamma(k/2)} x^{k/2 - 1} e^{-x/2}$$ $$,~ x > 0$$",
+                mean: "$k$",
+                variance: "$2k$"
+            },
+            {
+                name: "Student's t",
+                notation: "$X \\sim t(\\nu)$<br>$\\nu>0$",
+                origin: "Estimating the mean of a normally distributed population with small sample sizes.",
+                pdf: "$$\\frac{\\Gamma(\\frac{\\nu+1}{2})}{\\sqrt{\\nu\\pi}\\,\\Gamma(\\frac{\\nu}{2})} \\left(1 + \\frac{x^2}{\\nu} \\right)^{-\\frac{\\nu+1}{2}}$$ $$,~ x \\in \\mathbb{R}$$",
+                mean: "$0 \\; (\\nu > 1)$",
+                variance: "$\\frac{\\nu}{\\nu-2} \\; (\\nu > 2)$"
+            },
+            {
+                name: "Fisher F",
+                notation: "$X \\sim F(d_1, d_2)$<br>$d_1,d_2>0$",
+                origin: "Ratio of two scaled chi-squared distributions. Common in ANOVA.",
+                pdf: "$$\\frac{\\sqrt{\\frac{(d_1 x)^{d_1} d_2^{d_2}}{(d_1 x + d_2)^{d_1+d_2}}}}{x \\, B(\\frac{d_1}{2}, \\frac{d_2}{2})}$$ $$,~ x > 0$$",
+                mean: "$\\frac{d_2}{d_2-2} \\; (d_2 > 2)$",
+                variance: "$\\frac{2d_2^2(d_1+d_2-2)}{d_1(d_2-2)^2(d_2-4)} \\; (d_2 > 4)$"
+            },
+            {
+                name: "Beta",
+                notation: "$X \\sim \\text{Beta}(\\alpha, \\beta)$<br>$\\alpha,\\beta>0$",
+                origin: "Order statistics of uniform random samples (max, second largest, etc.).",
+                pdf: "$$\\frac{x^{\\alpha-1}(1-x)^{\\beta-1}}{B(\\alpha, \\beta)}$$ $$,~ x \\in [0, 1]$$",
+                mean: "$\\frac{\\alpha}{\\alpha+\\beta}$",
+                variance: "$\\frac{\\alpha\\beta}{(\\alpha+\\beta)^2(\\alpha+\\beta+1)}$"
+            },
+            {
+                name: "Gamma",
+                notation: "$X \\sim \\Gamma(\\alpha, \\beta)$<br>$\\alpha,\\beta>0~(\\lambda = \\frac{1}{\\beta})$",
+                origin: "Wait time until the $\\alpha$-th arrival in a Poisson process.",
+                pdf: "$$\\frac{1}{\\Gamma(k)\\beta^\\alpha} x^{\\alpha-1} e^{-x/\\beta}$$ $$,~ x > 0$$",
+                mean: "$\\alpha\\beta$",
+                variance: "$\\alpha\\beta^2$"
+            },
+            {
+                name: "Pareto",
+                notation: "$X \\sim \\text{Pareto}(x_m, \\alpha)$<br>$x_m,\\alpha>0$",
+                origin: "Wealth distribution models (e.g., the 80-20 rule).",
+                pdf: "$$\\frac{\\alpha x_m^\\alpha}{x^{\\alpha+1}}$$ $$,~ x \\ge x_m$$",
+                mean: "$\\frac{\\alpha x_m}{\\alpha-1} \\; (\\alpha > 1)$",
+                variance: "$\\frac{x_m^2 \\alpha}{(\\alpha-1)^2(\\alpha-2)} \\; (\\alpha > 2)$"
+            }
+        ];
+
+        // 2. Setup Reference Table and Render KaTeX
+        function renderTable() {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = DISTRIBUTIONS.map(dist => `
+                <tr class="border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750 transition-colors group">
+                    <td class="p-4 align-middle">
+                        <div class="font-bold text-slate-800 dark:text-slate-200">${dist.name}</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400 mt-1">${dist.notation}</div>
+                    </td>
+                    <td class="p-4 text-sm text-slate-600 dark:text-slate-300 align-middle leading-relaxed">
+                        ${dist.origin}
+                    </td>
+                    <td class="p-4 align-middle text-center overflow-x-auto">
+                        ${dist.pdf}
+                    </td>
+                    <td class="p-4 text-center align-middle border-l border-slate-100 dark:border-slate-800">
+                        ${dist.mean}
+                    </td>
+                    <td class="p-4 text-center align-middle border-l border-slate-100 dark:border-slate-800">
+                        ${dist.variance}
+                    </td>
+                </tr>
+            `).join('');
+
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ],
+                throwOnError: false,
+                errorColor: '#ef4444'
+            });
+        }
+
+        // 3. Calculator State & Logic
+        const distSelect = document.getElementById('dist-select');
+        const dynamicInputs = document.getElementById('dynamic-inputs');
+        const calculateBtn = document.getElementById('calculate-btn');
+        let chartInstance = null;
+
+        const INPUT_CONFIG = {
+            'normal': [
+                { id: 'param-mean', label: 'Mean (μ)', default: 0 },
+                { id: 'param-var', label: 'Variance (σ²)', default: 1 }
+            ],
+            't': [
+                { id: 'param-df', label: 'Degrees of Freedom (ν)', default: 10 }
+            ],
+            'chisquare': [
+                { id: 'param-k', label: 'Degrees of Freedom (k)', default: 5 }
+            ],
+            'f': [
+                { id: 'param-d1', label: 'Num Degrees of Freedom (d₁)', default: 5 },
+                { id: 'param-d2', label: 'Denom Degrees of Freedom (d₂)', default: 10 }
+            ]
+        };
+
+        function updateInputs() {
+            const sel = distSelect.value;
+            const fields = INPUT_CONFIG[sel];
+
+            dynamicInputs.innerHTML = fields.map(f => `
+                <div>
+                    <label class="block text-sm font-semibold mb-1">${f.label}</label>
+                    <input type="number" id="${f.id}" value="${f.default}" step="0.1" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+            `).join('');
+        }
+
+        function calculate() {
+            const dist = distSelect.value;
+            const tail = document.getElementById('tail-select').value;
+            const alpha = parseFloat(document.getElementById('alpha-input').value);
+
+            if (alpha <= 0 || alpha >= 1) {
+                alert("Significance level must be between 0 and 1.");
+                return;
+            }
+
+            let cv1, cv2, minX, maxX;
+            let params = {};
+            let pdfFunc;
+
+            if (dist === 'normal') {
+                const mu = parseFloat(document.getElementById('param-mean').value);
+                const variance = parseFloat(document.getElementById('param-var').value);
+                if (variance <= 0) return alert("Variance must be positive.");
+                const sigma = Math.sqrt(variance);
+                params = { mu, sigma };
+
+                pdfFunc = (x) => jStat.normal.pdf(x, mu, sigma);
+                minX = mu - 4 * sigma;
+                maxX = mu + 4 * sigma;
+
+                if (tail === 'two') {
+                    cv1 = jStat.normal.inv(alpha/2, mu, sigma);
+                    cv2 = jStat.normal.inv(1 - alpha/2, mu, sigma);
+                } else if (tail === 'left') {
+                    cv1 = jStat.normal.inv(alpha, mu, sigma);
+                } else {
+                    cv2 = jStat.normal.inv(1 - alpha, mu, sigma);
+                }
+            }
+            else if (dist === 't') {
+                const df = parseFloat(document.getElementById('param-df').value);
+                if (df <= 0) return alert("Degrees of freedom must be > 0.");
+                params = { df };
+
+                pdfFunc = (x) => jStat.studentt.pdf(x, df);
+                minX = -4;
+                maxX = 4;
+
+                if (tail === 'two') {
+                    cv1 = jStat.studentt.inv(alpha/2, df);
+                    cv2 = jStat.studentt.inv(1 - alpha/2, df);
+                } else if (tail === 'left') {
+                    cv1 = jStat.studentt.inv(alpha, df);
+                } else {
+                    cv2 = jStat.studentt.inv(1 - alpha, df);
+                }
+            }
+            else if (dist === 'chisquare') {
+                const k = parseFloat(document.getElementById('param-k').value);
+                if (k <= 0) return alert("Degrees of freedom must be > 0.");
+                params = { k };
+
+                pdfFunc = (x) => jStat.chisquare.pdf(x, k);
+                minX = 0;
+                maxX = jStat.chisquare.inv(0.999, k);
+
+                if (tail === 'two') {
+                    cv1 = jStat.chisquare.inv(alpha/2, k);
+                    cv2 = jStat.chisquare.inv(1 - alpha/2, k);
+                } else if (tail === 'left') {
+                    cv1 = jStat.chisquare.inv(alpha, k);
+                } else {
+                    cv2 = jStat.chisquare.inv(1 - alpha, k);
+                }
+            }
+            else if (dist === 'f') {
+                const d1 = parseFloat(document.getElementById('param-d1').value);
+                const d2 = parseFloat(document.getElementById('param-d2').value);
+                if (d1 <= 0 || d2 <= 0) return alert("Degrees of freedom must be > 0.");
+                params = { d1, d2 };
+
+                pdfFunc = (x) => jStat.centralF.pdf(x, d1, d2);
+                minX = 0;
+                maxX = jStat.centralF.inv(0.99, d1, d2);
+                if(maxX > 100) maxX = 10;
+
+                if (tail === 'two') {
+                    cv1 = jStat.centralF.inv(alpha/2, d1, d2);
+                    cv2 = jStat.centralF.inv(1 - alpha/2, d1, d2);
+                } else if (tail === 'left') {
+                    cv1 = jStat.centralF.inv(alpha, d1, d2);
+                } else {
+                    cv2 = jStat.centralF.inv(1 - alpha, d1, d2);
+                }
+            }
+
+            if (cv1 !== undefined && cv1 < minX) minX = cv1 - Math.abs(cv1)*0.2;
+            if (cv2 !== undefined && cv2 > maxX) maxX = cv2 + Math.abs(cv2)*0.2;
+
+            const resultBox = document.getElementById('calc-result');
+            if (tail === 'two') {
+                resultBox.innerHTML = `CV₁ = ${cv1.toFixed(4)} <br> CV₂ = ${cv2.toFixed(4)}`;
+            } else if (tail === 'left') {
+                resultBox.innerHTML = `CV = ${cv1.toFixed(4)}`;
+            } else {
+                resultBox.innerHTML = `CV = ${cv2.toFixed(4)}`;
+            }
+
+            drawChart(pdfFunc, minX, maxX, cv1, cv2, tail);
+        }
+
+        function drawChart(pdfFunc, minX, maxX, cv1, cv2, tail) {
+            const ctx = document.getElementById('distChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            const isDark = document.documentElement.classList.contains('dark');
+            const gridColor = isDark ? '#334155' : '#e2e8f0';
+            const textColor = isDark ? '#cbd5e1' : '#475569';
+
+            const points = 300;
+            const step = (maxX - minX) / points;
+            const labels = [];
+            const dataLine = [];
+            const dataFillRejection = [];
+            const dataFillAcceptance = [];
+
+            for (let i = 0; i <= points; i++) {
+                const x = minX + i * step;
+                const y = pdfFunc(x);
+                labels.push(x);
+                dataLine.push(y);
+
+                let isReject = false;
+                if (tail === 'two') {
+                    if (x <= cv1 || x >= cv2) isReject = true;
+                } else if (tail === 'left') {
+                    if (x <= cv1) isReject = true;
+                } else if (tail === 'right') {
+                    if (x >= cv2) isReject = true;
+                }
+
+                if (isReject) {
+                    dataFillRejection.push(y);
+                    dataFillAcceptance.push(null);
+                } else {
+                    dataFillRejection.push(null);
+                    dataFillAcceptance.push(y);
+                }
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Density',
+                            data: dataLine,
+                            borderColor: isDark ? '#94a3b8' : '#64748b',
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Acceptance Region',
+                            data: dataFillAcceptance,
+                            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                            borderColor: 'transparent',
+                            fill: 'start',
+                            pointRadius: 0,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Rejection Region (α)',
+                            data: dataFillRejection,
+                            backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                            borderColor: 'transparent',
+                            fill: 'start',
+                            pointRadius: 0,
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { labels: { color: textColor } },
+                        tooltip: { enabled: false }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            grid: { color: gridColor, drawBorder: false },
+                            ticks: { color: textColor, maxTicksLimit: 10 }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: gridColor, drawBorder: false },
+                            ticks: { color: textColor, display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        function updateThemeUI() {
+            if (document.documentElement.classList.contains('dark')) {
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            } else {
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+            updateThemeUI();
+            if(chartInstance) calculate();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            updateThemeUI();
+
+            renderTable();
+            updateInputs();
+            calculate();
+
+            distSelect.addEventListener('change', () => {
+                updateInputs();
+                calculate();
+            });
+            calculateBtn.addEventListener('click', calculate);
+        });
+    </script>
+</body>
+</html>
